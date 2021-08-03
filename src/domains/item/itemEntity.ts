@@ -3,7 +3,6 @@ import { Entity } from '../../shared/entity'
 export interface UnmarshalledItem {
   id?: string;
   displayName: string;
-  price: number;
 }
 
 export class Item extends Entity<UnmarshalledItem> {
@@ -21,7 +20,6 @@ export class Item extends Entity<UnmarshalledItem> {
     return {
       id: this.id,
       displayName: this.displayName,
-      price: parseFloat(this.price.toString()),
     }
   }
 
@@ -33,7 +31,4 @@ export class Item extends Entity<UnmarshalledItem> {
     return this.props.displayName
   }
 
-  get price(): number {
-    return this.props.price
-  }
 }

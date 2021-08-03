@@ -14,7 +14,7 @@ describe('Cart Entity', () => {
 
   it('should able to add item to Cart', () => {
     // Arrange
-    const item = Item.create({id: faker.datatype.uuid(), displayName: faker.name.findName(), price: faker.datatype.number()});
+    const item = Item.create({id: faker.datatype.uuid(), displayName: faker.name.findName()});
     const cart = Cart.create({id: faker.datatype.uuid(), rawProducts:[]});
     const mockItem = { item:item, quantity:10 };
     

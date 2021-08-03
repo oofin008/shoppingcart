@@ -1,4 +1,3 @@
-import { ValidationError } from '../../utils/errors'
 import { Entity } from '../../shared/entity'
 import { Item, UnmarshalledItem } from '../item/itemEntity'
 
@@ -15,7 +14,6 @@ export interface UnmarshalledCartItem {
 export interface UnmarshalledCart {
   id: string
   products: UnmarshalledCartItem[]
-  totalPrice: number
 }
 
 export interface CartProps {
@@ -45,7 +43,6 @@ export class Cart extends Entity<CartProps> {
         item: product.item.unmarshal(),
         quantity: product.quantity,
       })),
-      totalPrice: this.totalPrice,
     }
   }
 
@@ -55,14 +52,6 @@ export class Cart extends Entity<CartProps> {
 
   get id(): string {
     return this._id
-  }
-
-  get totalPrice(): number {
-    const sum = (acc: number, product: CartItem) => {
-      return acc + product.item.price * product.quantity
-    }
-
-    return this.products.reduce(sum, 0)
   }
 
   get products(): CartItem[] {
@@ -78,7 +67,7 @@ export class Cart extends Entity<CartProps> {
 
   public add(item: Item, quantity: number): void {
     if (!Cart.validQuantity(quantity)) {
-      throw new ValidationError(
+      throw new Error(
         'Unit needs to have a quantity between 1 and 1000',
       )
     }
@@ -92,7 +81,7 @@ export class Cart extends Entity<CartProps> {
       }
 
       if (!Cart.validQuantity(product.quantity)) {
-        throw new ValidationError('Units exceeded allowed quantity')
+        throw new Error('Units exceeded allowed quantity')
       }
 
       const products = [
