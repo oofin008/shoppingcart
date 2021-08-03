@@ -14,6 +14,7 @@
     "@types/chai": "^4.2.21",
     "@types/deep-equal": "^1.0.1",
     "@types/faker": "^5.5.7",
+    "@types/jest": "^26.0.24",
     "@types/lodash": "^4.14.171",
     "@types/mocha": "^9.0.0",
     "@types/sinon": "^10.0.2",
@@ -29,6 +30,8 @@
   "dependencies": {
     "cuid": "^2.1.8",
     "deep-equal": "^2.0.5",
-    "lodash": "^4.17.21"
+    "inversify": "^5.1.1",
+    "lodash": "^4.17.21",
+    "reflect-metadata": "^0.1.13"
   }
 }
