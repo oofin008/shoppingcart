@@ -46,26 +46,7 @@ export class Cart extends Entity<CartProps> {
     }
   }
 
-  private static validQuantity(quantity: number) {
-    return quantity >= 1 && quantity <= 1000
-  }
-
-  get id(): string {
-    return this._id
-  }
-
-  get products(): CartItem[] {
-    return this._products
-  }
-
-  set products(products: CartItem[] | UnmarshalledCartItem[]) {
-    this._products = products.map((p) => ({
-      item: p.item instanceof Item ? p.item : Item.create(p.item),
-      quantity: p.quantity,
-    }))
-  }
-
-  public add(item: Item, quantity: number): void {
+  public add(item: UnmarshalledItem, quantity: number): void {
     if (!Cart.validQuantity(quantity)) {
       throw new Error(
         'Unit needs to have a quantity between 1 and 1000',
@@ -106,4 +87,24 @@ export class Cart extends Entity<CartProps> {
   public empty(): void {
     this.products = []
   }
+
+  private static validQuantity(quantity: number) {
+    return quantity >= 1 && quantity <= 1000
+  }
+
+  get id(): string {
+    return this._id
+  }
+
+  get products(): CartItem[] {
+    return this._products
+  }
+
+  set products(products: CartItem[] | UnmarshalledCartItem[]) {
+    this._products = products.map((p) => ({
+      item: p.item instanceof Item ? p.item : Item.create(p.item),
+      quantity: p.quantity,
+    }))
+  }
+
 }
