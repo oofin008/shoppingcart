@@ -15,8 +15,8 @@ export class CartRepositoryImpl implements CartRepository {
     return this._repository.update(cart);
   }
 
-  public getCartById(id: number): Promise<Cart>{
-    return this._repository.getCartById(id);
+  public getById(id: string): Promise<Cart>{
+    return this._repository.getById(id);
   }
 
 }
