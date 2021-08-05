@@ -1,5 +1,3 @@
-import { injectable, inject } from 'inversify';
-import { TYPES } from '../../../types';
 import { Cart } from '../cartEntity';
 import { Item } from '../../item/itemEntity';
 import { CartRepository } from '../cartRepository';
@@ -7,9 +5,12 @@ export interface IAddItemToCartUseCase {
   execute(cartId: string, item: Item, quantity: number): Promise<Cart>;
 }
 
-@injectable()
 export class AddItemToCartUseCase implements IAddItemToCartUseCase {
-  @inject(TYPES.CartRepository) private repository: CartRepository
+  private repository: CartRepository
+
+  constructor(repository: CartRepository) {
+    this.repository = repository
+  }
 
   private async _getCart(id: string): Promise<Cart> {
     try {

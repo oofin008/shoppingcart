@@ -4,7 +4,7 @@
     "moduleResolution": "node",
     "target": "es6",
     "esModuleInterop": true,
-    "types": ["reflect-metadata", "mocha"],
+    "types": ["mocha"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "outDir": "./dist"
