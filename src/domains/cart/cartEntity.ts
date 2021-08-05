@@ -1,25 +1,8 @@
-import { Entity } from '../../shared/entity'
-import { Item, UnmarshalledItem } from '../item/itemEntity'
+import { Entity } from '../../shared/entity';
+import { CartProps, CartItem } from './cartInterface';
+import { ItemProps } from '../item/itemInterface';
 
-export interface CartItem {
-  item: Item
-  quantity: number
-}
 
-export interface UnmarshalledCartItem {
-  item: UnmarshalledItem
-  quantity: number
-}
-
-export interface UnmarshalledCart {
-  id: string
-  products: UnmarshalledCartItem[]
-}
-
-export interface CartProps {
-  id?: string
-  rawProducts?: UnmarshalledCartItem[]
-}
 
 export class Cart extends Entity<CartProps> {
   private _products: CartItem[];
@@ -36,17 +19,7 @@ export class Cart extends Entity<CartProps> {
     return instance
   }
 
-  public unmarshal(): UnmarshalledCart {
-    return {
-      id: this.id,
-      products: this.products.map((product) => ({
-        item: product.item.unmarshal(),
-        quantity: product.quantity,
-      })),
-    }
-  }
-
-  public add(item: UnmarshalledItem, quantity: number): void {
+  public add(item: ItemProps, quantity: number): void {
     if (!Cart.validQuantity(quantity)) {
       throw new Error(
         'Unit needs to have a quantity between 1 and 1000',
@@ -100,9 +73,9 @@ export class Cart extends Entity<CartProps> {
     return this._products
   }
 
-  set products(products: CartItem[] | UnmarshalledCartItem[]) {
+  set products(products: CartItem[]) {
     this._products = products.map((p) => ({
-      item: p.item instanceof Item ? p.item : Item.create(p.item),
+      item: p.item,
       quantity: p.quantity,
     }))
   }

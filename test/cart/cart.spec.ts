@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import faker from 'faker';
 import _ from 'lodash';
 import { Cart } from '../../src/domains/cart/cartEntity';
-import { UnmarshalledItem } from '../../src/domains/item/itemEntity';
+import { ItemProps } from '../../src/domains/item/itemInterface';
 
 describe('Cart Entity', () => {
 
@@ -13,7 +13,7 @@ describe('Cart Entity', () => {
 
   it('should able to add item to Cart', () => {
     // Arrange
-    const item: UnmarshalledItem = {
+    const item: ItemProps = {
       id: faker.datatype.uuid(),
       displayName: faker.name.findName(),
       price: faker.datatype.number(),
@@ -31,12 +31,12 @@ describe('Cart Entity', () => {
   it('should able to remove item from Cart', () => {
     // Arrange
     const mockItemId = faker.datatype.uuid();
-    const item1: UnmarshalledItem = {
+    const item1: ItemProps = {
       id: mockItemId,
       displayName: faker.name.findName(),
       price: faker.datatype.number(),
     }
-    const item2: UnmarshalledItem = {
+    const item2: ItemProps = {
       id: faker.datatype.uuid(),
       displayName: faker.name.findName(),
       price: faker.datatype.number(),
@@ -44,10 +44,11 @@ describe('Cart Entity', () => {
     const cart = Cart.create({id: faker.datatype.uuid(), rawProducts:[]});
     const mockItem1 = { item:item1, quantity:10 };
     const mockItem2 = { item:item2, quantity:10 };
-    cart.add(item1, 10);
-    cart.add(item2, 10);
+    
 
     // Act
+    cart.add(item1, 10);
+    cart.add(item2, 10);
     cart.remove(mockItemId);
 
     // Assert
@@ -57,21 +58,21 @@ describe('Cart Entity', () => {
 
   it('should able to clear item in Cart', () => {
     // Arrange
-    const item1: UnmarshalledItem = {
+    const item1: ItemProps = {
       id: faker.datatype.uuid(),
       displayName: faker.name.findName(),
       price: faker.datatype.number(),
     }
-    const item2: UnmarshalledItem = {
+    const item2: ItemProps = {
       id: faker.datatype.uuid(),
       displayName: faker.name.findName(),
       price: faker.datatype.number(),
     }
     const cart = Cart.create({id: faker.datatype.uuid(), rawProducts:[]});
-    cart.add(item1, faker.datatype.number(500));
-    cart.add(item2, faker.datatype.number(500));
 
     // Act
+    cart.add(item1, faker.datatype.number(500));
+    cart.add(item2, faker.datatype.number(500));
     cart.empty();
 
     // Assert

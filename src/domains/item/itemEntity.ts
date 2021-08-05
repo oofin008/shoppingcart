@@ -1,23 +1,18 @@
 import { Entity } from '../../shared/entity'
+import { ItemProps } from './itemInterface';
 
-export interface UnmarshalledItem {
-  id?: string;
-  displayName: string;
-  price: number;
-}
-
-export class Item extends Entity<UnmarshalledItem> {
-  private constructor(props: UnmarshalledItem) {
+export class Item extends Entity<ItemProps> {
+  private constructor(props: ItemProps) {
     const { id, ...data } = props
     super(data, id)
   }
 
-  public static create(props: UnmarshalledItem): Item {
+  public static create(props: ItemProps): Item {
     const instance = new Item(props)
     return instance
   }
 
-  public unmarshal(): UnmarshalledItem {
+  public unmarshal(): ItemProps {
     return {
       id: this.id,
       displayName: this.displayName,
