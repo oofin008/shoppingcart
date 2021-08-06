@@ -7,5 +7,5 @@ export interface CartItem {
 
 export interface CartProps {
   id?: string
-  rawProducts?: CartItem[]
+  products?: CartItem[]
 }

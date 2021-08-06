@@ -15,7 +15,7 @@ export class Cart extends Entity<CartProps> {
 
   public static create(props: CartProps): Cart {
     const instance = new Cart(props)
-    instance.products = instance.props.rawProducts || []
+    instance.products = instance.props.products || []
     return instance
   }
 

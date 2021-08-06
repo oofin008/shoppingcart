@@ -7,7 +7,7 @@ import { ItemProps } from '../../src/domains/item/itemInterface';
 describe('Cart Entity', () => {
 
   it('should able to create Cart', () => {
-    const cart = Cart.create({id: faker.datatype.uuid(), rawProducts:[]});
+    const cart = Cart.create({id: faker.datatype.uuid(), products:[]});
     expect(cart.id).to.be.an('string');
   });
 
@@ -18,7 +18,7 @@ describe('Cart Entity', () => {
       displayName: faker.name.findName(),
       price: faker.datatype.number(),
     }
-    const cart = Cart.create({id: faker.datatype.uuid(), rawProducts:[]});
+    const cart = Cart.create({id: faker.datatype.uuid(), products:[]});
     const mockItem = { item:item, quantity:10 };
     
     // Act
@@ -41,7 +41,7 @@ describe('Cart Entity', () => {
       displayName: faker.name.findName(),
       price: faker.datatype.number(),
     }
-    const cart = Cart.create({id: faker.datatype.uuid(), rawProducts:[]});
+    const cart = Cart.create({id: faker.datatype.uuid(), products:[]});
     const mockItem1 = { item:item1, quantity:10 };
     const mockItem2 = { item:item2, quantity:10 };
     
@@ -68,7 +68,7 @@ describe('Cart Entity', () => {
       displayName: faker.name.findName(),
       price: faker.datatype.number(),
     }
-    const cart = Cart.create({id: faker.datatype.uuid(), rawProducts:[]});
+    const cart = Cart.create({id: faker.datatype.uuid(), products:[]});
 
     // Act
     cart.add(item1, faker.datatype.number(500));

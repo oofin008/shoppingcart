@@ -2,11 +2,11 @@ import { Either, EitherAsync, DataError } from '../../../shared';
 import { Cart } from '../cartEntity';
 import { CartRepository } from '../cartRepository';
 
-export interface IClearItemInCart {
+export interface IGetCart {
   execute(cartId: string): Promise<Either<DataError,Cart>>;
 }
 
-export class ClearItemInCartUseCase implements IClearItemInCart {
+export class GetCartUseCase implements IGetCart {
   private repository: CartRepository;
 
   constructor(repository: CartRepository) {
@@ -14,11 +14,6 @@ export class ClearItemInCartUseCase implements IClearItemInCart {
   }
 
   public async execute(cartId: string): Promise<Either<DataError,Cart>> {
-    const cartResult = EitherAsync.fromPromise(this.repository.getById(cartId));
-
-    return cartResult.flatMap( async (cart: Cart) => {
-      cart.empty();
-      return await this.repository.update(cart);
-    }).run();
+    return this.repository.getById(cartId);
   }
 }
