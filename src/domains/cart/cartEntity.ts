@@ -22,12 +22,11 @@ export class Cart {
   public addItem(item: ItemProps): void {
     const existedIndex = this._items.findIndex((i) => i.id === item.id);
 
-    
     if (existedIndex > -1) {
       const addedItem: ItemProps = {
         ...this._items[existedIndex],
         quantity: this._items[existedIndex].quantity + item.quantity,
-      }
+      };
       const newItemsList: ItemProps[] = [
         ...this._items.slice(0, existedIndex),
         addedItem,
@@ -37,8 +36,15 @@ export class Cart {
     } else {
       this._items = [...this._items, item];
     }
-    this._totalPrice = this.calculateTotalPrice(this._items);
-    this._totalItems = this.calculateTotalItems(this._items);
+    this.updateTotalPriceAndTotalItems();
+  }
+
+  public removeItem(itemId: string): void {
+    const newItemsList = this._items.filter(
+      (item) => item.id !== itemId,
+    )
+    this._items = newItemsList
+    this.updateTotalPriceAndTotalItems();
   }
 
   private calculateTotalPrice(products: ItemProps[]): TotalPrice {
@@ -51,6 +57,11 @@ export class Cart {
     return products.reduce((totalItem, item) => {
       return totalItem + item.quantity;
     }, 0);
+  }
+
+  private updateTotalPriceAndTotalItems(): void {
+    this._totalPrice = this.calculateTotalPrice(this._items);
+    this._totalItems = this.calculateTotalItems(this._items);
   }
 
   get id(): CartId {

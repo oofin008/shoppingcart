@@ -54,10 +54,8 @@ describe("Cart Entity", () => {
     it("should return expected totalPrice and items if item with quantity 1 is added", () => {
       const mockItems = [givenShoppingCartItem(1, 29.99)];
       const shoppingCart = Cart.create(givenMockShoppingCart(mockItems));
-      
-      shoppingCart.addItem(
-        givenShoppingCartItem(1, 39.94)
-      );
+
+      shoppingCart.addItem(givenShoppingCartItem(1, 39.94));
 
       expect(shoppingCart.items).to.has.length(2);
       expect(shoppingCart.totalPrice).to.lessThanOrEqual(69.93);
@@ -67,10 +65,8 @@ describe("Cart Entity", () => {
     it("should return expected totalPrice and items if item with quantity > 1 is added", () => {
       const mockItems = [givenShoppingCartItem(1, 29.99)];
       const shoppingCart = Cart.create(givenMockShoppingCart(mockItems));
-      
-      shoppingCart.addItem(
-        givenShoppingCartItem(3, 39.94)
-      );
+
+      shoppingCart.addItem(givenShoppingCartItem(3, 39.94));
 
       expect(shoppingCart.items).to.has.length(2);
       expect(shoppingCart.totalPrice).to.equal(149.81);
@@ -88,6 +84,34 @@ describe("Cart Entity", () => {
       expect(shoppingCart.totalItems).to.equal(2);
     });
   });
+
+  describe("removeItem", () => {
+    it("should return totalPrice 0 and empty items if remove unique item", () => {
+      const mockItems = [givenShoppingCartItem(1, 29.99)];
+      const shoppingCart = Cart.create(givenMockShoppingCart(mockItems));
+      
+      shoppingCart.removeItem(mockItems[0].id);
+
+      expect(shoppingCart.items).to.be.empty;
+      expect(shoppingCart.totalPrice).to.equal(0);
+      expect(shoppingCart.totalItems).to.equal(0);
+    });
+
+    it("should return expected totalPrice and items if remove item", () => {
+      const mockItems = [
+        givenShoppingCartItem(1, 29.99),
+        givenShoppingCartItem(5, 39.94),
+      ];
+      const shoppingCart = Cart.create(givenMockShoppingCart(mockItems));
+
+      shoppingCart.removeItem(mockItems[1].id);
+
+      expect(shoppingCart.items).to.has.length(1);
+      expect(shoppingCart.totalPrice).to.equal(29.99);
+      expect(shoppingCart.totalItems).to.equal(1);
+    });
+  });
+
 });
 
 function givenShoppingCartItem(quantity = 1, price = 0): ItemProps {
