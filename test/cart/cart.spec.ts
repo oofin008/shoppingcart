@@ -50,41 +50,44 @@ describe("Cart Entity", () => {
     });
   });
 
-  // describe("addItem", () => {
-  //   it("should return expected totalPrice and items if item with quantity 1 is added", () => {
-  //     const items = [givenAShoppingCartItem(1, 29.99)];
-  //     const shoppingCart = new Cart(items);
-  //     const newShoppingCart = shoppingCart.addItem(
-  //       givenAShoppingCartItem(1, 39.94)
-  //     );
+  describe("addItem", () => {
+    it("should return expected totalPrice and items if item with quantity 1 is added", () => {
+      const mockItems = [givenShoppingCartItem(1, 29.99)];
+      const shoppingCart = Cart.create(givenMockShoppingCart(mockItems));
+      
+      shoppingCart.addItem(
+        givenShoppingCartItem(1, 39.94)
+      );
 
-  //     expect(newShoppingCart.items).toHaveLength(2);
-  //     expect(newShoppingCart.totalPrice).toEqual(69.93);
-  //     expect(newShoppingCart.totalItems).toEqual(2);
-  //   });
+      expect(shoppingCart.items).to.has.length(2);
+      expect(shoppingCart.totalPrice).to.lessThanOrEqual(69.93);
+      expect(shoppingCart.totalItems).to.equal(2);
+    });
 
-  //   it("should return expected totalPrice and items if item with quantity > 1 is added", () => {
-  //     const items = [givenAShoppingCartItem(1, 29.99)];
-  //     const shoppingCart = new Cart(items);
-  //     const newShoppingCart = shoppingCart.addItem(
-  //       givenAShoppingCartItem(3, 39.94)
-  //     );
+    it("should return expected totalPrice and items if item with quantity > 1 is added", () => {
+      const mockItems = [givenShoppingCartItem(1, 29.99)];
+      const shoppingCart = Cart.create(givenMockShoppingCart(mockItems));
+      
+      shoppingCart.addItem(
+        givenShoppingCartItem(3, 39.94)
+      );
 
-  //     expect(newShoppingCart.items).toHaveLength(2);
-  //     expect(newShoppingCart.totalPrice).toEqual(149.81);
-  //     expect(newShoppingCart.totalItems).toEqual(4);
-  //   });
+      expect(shoppingCart.items).to.has.length(2);
+      expect(shoppingCart.totalPrice).to.equal(149.81);
+      expect(shoppingCart.totalItems).to.equal(4);
+    });
 
-  //   it("should increment quantity to existed item and totalPrice if add a existed item again", () => {
-  //     const items = [givenAShoppingCartItem(1, 29.99)];
-  //     const shoppingCart = new Cart(items);
-  //     const newShoppingCart = shoppingCart.addItem(items[0]);
+    it("should increment quantity to existed item and totalPrice if add a existed item again", () => {
+      const items = [givenShoppingCartItem(1, 29.99)];
+      const shoppingCart = Cart.create(givenMockShoppingCart(items));
 
-  //     expect(newShoppingCart.items).toHaveLength(1);
-  //     expect(newShoppingCart.totalPrice).toEqual(59.98);
-  //     expect(newShoppingCart.totalItems).toEqual(2);
-  //   });
-  // });
+      shoppingCart.addItem(items[0]);
+
+      expect(shoppingCart.items).to.has.length(1);
+      expect(shoppingCart.totalPrice).to.equal(59.98);
+      expect(shoppingCart.totalItems).to.equal(2);
+    });
+  });
 });
 
 function givenShoppingCartItem(quantity = 1, price = 0): ItemProps {

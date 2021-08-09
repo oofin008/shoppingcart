@@ -2,8 +2,6 @@ import cuid from "cuid";
 import { CartProps, CartId, TotalPrice, TotalItem } from "./cartInterface";
 import { ItemProps } from "../item/itemInterface";
 
-
-
 export class Cart {
   private _id: CartId;
   private _items: ItemProps[];
@@ -24,17 +22,23 @@ export class Cart {
   public addItem(item: ItemProps): void {
     const existedIndex = this._items.findIndex((i) => i.id === item.id);
 
+    
     if (existedIndex > -1) {
-      const newItems = this._items.map((oldItem) => {
-        if (oldItem.id === item.id) {
-          return { ...oldItem, quantity: oldItem.quantity + item.quantity };
-        } else {
-          return oldItem;
-        }
-      });
+      const addedItem: ItemProps = {
+        ...this._items[existedIndex],
+        quantity: this._items[existedIndex].quantity + item.quantity,
+      }
+      const newItemsList: ItemProps[] = [
+        ...this._items.slice(0, existedIndex),
+        addedItem,
+        ...this._items.slice(existedIndex + 1),
+      ];
+      this._items = newItemsList;
     } else {
-      const newItems = [...this._items, item];
+      this._items = [...this._items, item];
     }
+    this._totalPrice = this.calculateTotalPrice(this._items);
+    this._totalItems = this.calculateTotalItems(this._items);
   }
 
   private calculateTotalPrice(products: ItemProps[]): TotalPrice {
