@@ -89,7 +89,7 @@ describe("Cart Entity", () => {
     it("should return totalPrice 0 and empty items if remove unique item", () => {
       const mockItems = [givenShoppingCartItem(1, 29.99)];
       const shoppingCart = Cart.create(givenMockShoppingCart(mockItems));
-      
+
       shoppingCart.removeItem(mockItems[0].id);
 
       expect(shoppingCart.items).to.be.empty;
@@ -112,6 +112,32 @@ describe("Cart Entity", () => {
     });
   });
 
+  describe("editItem", () => {
+    it("should return expected totalPrice and items if edit quantity to unique item", () => {
+      const mockItems = [givenShoppingCartItem(1, 29.99)];
+      const shoppingCart = Cart.create(givenMockShoppingCart(mockItems));
+
+      shoppingCart.editItem(mockItems[0].id, 2);
+
+      expect(shoppingCart.items).to.has.length(1);
+      expect(shoppingCart.totalPrice).to.equal(59.98);
+      expect(shoppingCart.totalItems).to.equal(2);
+    });
+
+    it("should return expected totalPrice and items if edit quantity to a item", () => {
+      const mockItems = [
+        givenShoppingCartItem(1, 29.99),
+        givenShoppingCartItem(5, 39.94),
+      ];
+      const shoppingCart = Cart.create(givenMockShoppingCart(mockItems));
+
+      shoppingCart.editItem(mockItems[0].id, 2);
+
+      expect(shoppingCart.items).to.has.length(2);
+      expect(shoppingCart.totalPrice).to.equal(259.68);
+      expect(shoppingCart.totalItems).to.equal(7);
+    });
+  });
 });
 
 function givenShoppingCartItem(quantity = 1, price = 0): ItemProps {

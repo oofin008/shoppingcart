@@ -32,19 +32,27 @@ export class Cart {
         addedItem,
         ...this._items.slice(existedIndex + 1),
       ];
-      this._items = newItemsList;
+      this.updateCart(newItemsList);
     } else {
-      this._items = [...this._items, item];
+      this.updateCart([...this._items, item]);
     }
-    this.updateTotalPriceAndTotalItems();
   }
 
   public removeItem(itemId: string): void {
-    const newItemsList = this._items.filter(
-      (item) => item.id !== itemId,
-    )
-    this._items = newItemsList
-    this.updateTotalPriceAndTotalItems();
+    const newItemsList = this._items.filter((item) => item.id !== itemId);
+    this.updateCart(newItemsList);
+  }
+
+  public editItem(itemId: string, quantity: number): void {
+    const newItemsList = this.items.map((oldItem) => {
+      if (oldItem.id === itemId) {
+        return { ...oldItem, quantity: quantity };
+      } else {
+        return oldItem;
+      }
+    });
+
+    this.updateCart(newItemsList);
   }
 
   private calculateTotalPrice(products: ItemProps[]): TotalPrice {
@@ -63,6 +71,12 @@ export class Cart {
     this._totalPrice = this.calculateTotalPrice(this._items);
     this._totalItems = this.calculateTotalItems(this._items);
   }
+
+  private updateCart(items: ItemProps[]): void {
+    this._items = items;
+    this.updateTotalPriceAndTotalItems();
+  }
+
 
   get id(): CartId {
     return this._id;
