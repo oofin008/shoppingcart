@@ -1,11 +1,9 @@
 import { ItemProps } from '../item/itemInterface';
 
-export interface CartItem {
-  item: ItemProps
-  quantity: number
-}
-
+export type CartId = string;
+export type TotalPrice = number;
+export type TotalItem = number;
 export interface CartProps {
-  id?: string
-  products?: CartItem[]
+  readonly id: CartId;
+  readonly items: ItemProps[]
 }

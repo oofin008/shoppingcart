@@ -1,6 +1,7 @@
-
+export type ItemId = string;
 export interface ItemProps {
-  id?: string;
+  id: ItemId;
   displayName: string;
   price: number;
+  quantity: number;
 }
