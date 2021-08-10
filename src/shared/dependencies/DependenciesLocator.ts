@@ -4,19 +4,23 @@ import { GetCartUseCase } from "../../domains/cart/useCases/getCartUseCase";
 import { AddItemToCartUseCase } from "../../domains/cart/useCases/addItemToCartUseCase";
 import { RemoveItemFromCartUseCase } from "../../domains/cart/useCases/removeItemFromCartUseCase";
 import { EditCartItemUseCase } from "../../domains/cart/useCases/editCartItemUseCase";
-import { CartPloc } from "../../domains/cart/presentation/CartPloc";
+import { ItemMemoryRepositoryImpl } from "../../domains/item/data/itemMemoryRepositoryImpl";
+import { GetItemsUseCase } from "../../domains/item/useCases/getItemsUseCase"
+import { ItemPloc } from "../../domains/item/presentation/itemPloc";
+import { CartPloc } from "../../domains/cart/presentation/cartPloc";
 import cuid from "cuid";
 
-// function provideProductsPloc(): ProductsPloc {
-//   const productRepository = new ProductInMemoryRepository();
-//   const getProductsUseCase = new GetProductsUseCase(productRepository);
-//   const productsPloc = new ProductsPloc(getProductsUseCase);
+const database = new MemoryData();
 
-//   return productsPloc;
-// }
+function provideProductsPloc(): ItemPloc {
+  const productRepository = new ItemMemoryRepositoryImpl(database);
+  const getProductsUseCase = new GetItemsUseCase(productRepository);
+  const productsPloc = new ItemPloc(getProductsUseCase);
+
+  return productsPloc;
+}
 
 function provideCartPloc(): CartPloc {
-  const database = new MemoryData();
   const cartRepository = new CartMemoryRepositoryImpl(database);
   const getCartUseCase = new GetCartUseCase(cartRepository);
   const addProductToCartUseCase = new AddItemToCartUseCase(cartRepository);
@@ -38,6 +42,6 @@ function provideCartPloc(): CartPloc {
 }
 
 export const dependenciesLocator = {
-  // provideProductsPloc,
+  provideProductsPloc,
   provideCartPloc,
 };
