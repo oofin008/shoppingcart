@@ -143,7 +143,7 @@ describe("Cart Entity", () => {
 function givenShoppingCartItem(quantity = 1, price = 0): ItemProps {
   return {
     id: faker.datatype.uuid(),
-    displayName: faker.name.findName(),
+    title: faker.name.findName(),
     price: price,
     quantity: quantity,
   };

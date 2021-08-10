@@ -20,7 +20,7 @@ export class AddItemToCartUseCase {
       .flatMap(async (cart) => {
         const cartItem:ItemProps = {
           id: item.id,
-          displayName: item.displayName,
+          title: item.title,
           price: item.price,
           quantity: 1,
         };
