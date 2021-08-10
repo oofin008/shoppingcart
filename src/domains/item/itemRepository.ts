@@ -1,8 +1,9 @@
-// import { ItemProps } from './itemInterface';
-// import { Item } from './itemEntity';
+import { ItemProps } from './itemInterface';
+import { Item } from './itemEntity';
 
-// export interface ItemRepository {
-//   getAll(): Promise<Item[]>
-//   getById(id: string): Promise<Item>
-//   create(item: ItemProps): Promise<Item>
-// }
+export interface ItemRepository {
+  getAll(): Promise<Item[]>
+  getById(id: string): Promise<Item>
+  create(item: ItemProps): Promise<Item>
+  update(item: ItemProps): Promise<Item>
+}
