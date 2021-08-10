@@ -55,6 +55,13 @@ export class Cart {
     this.updateCart(newItemsList);
   }
 
+  public unmarshal(): CartProps {
+    return {
+      id: this._id,
+      items: this._items,
+    };
+  }
+
   private calculateTotalPrice(products: ItemProps[]): TotalPrice {
     return products.reduce((totalPrice, item) => {
       return totalPrice + item.price * item.quantity;
