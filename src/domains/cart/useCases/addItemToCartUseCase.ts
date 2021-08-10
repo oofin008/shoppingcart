@@ -1,6 +1,6 @@
 import { CartRepository } from "../cartRepository";
 import { Cart } from "../cartEntity";
-import { CartId, CartProps } from "../cartInterface";
+import { CartId } from "../cartInterface";
 import { ItemProps } from "../../item/itemInterface";
 import { Either, DataError, EitherAsync } from "../../../shared/domain";
 
