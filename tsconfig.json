@@ -7,7 +7,7 @@
     "types": ["mocha"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "outDir": "./dist"
+    "outDir": "./build"
   },
   "exclude": [
     "node_modules",
