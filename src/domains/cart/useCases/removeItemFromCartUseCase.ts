@@ -1,7 +1,6 @@
 import { CartRepository } from "../cartRepository";
 import { ItemRepository } from "../../item";
 import { Cart } from "../cartEntity";
-import { DataError, Either, EitherAsync } from "../../../shared/domain";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../../types";
 

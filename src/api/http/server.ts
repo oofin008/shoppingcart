@@ -5,7 +5,6 @@ import bodyParser from 'koa-bodyparser'
 import compress from 'koa-compress'
 
 import { TYPES } from '../../types'
-// import { Logger } from '../../infra/logging/pino'
 import { errorHandler, devErrorHandler } from './middlewares/error-handler'
 import { HTTPRouter } from './router'
 
@@ -16,11 +15,10 @@ export interface IServer {
 @injectable()
 export class Server {
   @inject(TYPES.HTTPRouter) private _router: HTTPRouter
-  // @inject(TYPES.Logger) private _logger: Logger
 
   start(): void {
     const router = this._router.get()
-    // const logger = this._logger.get()
+
     const env = String(process.env)
 
     router.get('/robots.txt', (ctx) => {
@@ -43,7 +41,6 @@ export class Server {
 
     app.on('error', (err) => {
       if (process.env.NODE_ENV !== 'test') {
-        // logger.error(err)
         console.error(err)
       }
     })

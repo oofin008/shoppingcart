@@ -2,7 +2,6 @@ import { injectable, inject } from 'inversify'
 import { Cart } from "../cartEntity";
 import { CartProps } from '../cartInterface';
 import { CartRepository } from "../cartRepository";
-import { DataError, Either } from "../../../shared/domain";
 import { MemoryData } from '../../../shared/data/memoryData';
 import { TYPES } from '../../../types';
 

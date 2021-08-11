@@ -20,10 +20,6 @@ import { HTTPController } from './api/http/controller'
 import { HTTPRouter } from './api/http/router'
 import { Server, IServer } from './api/http/server'
 
-// import { CartService } from './app/cart'
-// import { ItemService } from './app/item'
-
-// import { Logger } from './infra/logging/pino'
 import { MemoryData } from './shared/data/memoryData'
 import { CartMemoryRepositoryImpl } from './domains/cart/data'
 import { ItemMemoryRepositoryImpl } from './domains/item/data'
@@ -44,7 +40,6 @@ container.bind(TYPES.UpdateItemStockUseCase).to(UpdateItemInStockUseCase)
 container.bind(TYPES.GetItemUseCase).to(GetItemsUseCase)
 container.bind(TYPES.GetItemByIdUseCase).to(GetItemByIdUseCase)
 
-// container.bind(TYPES.Logger).to(Logger).inSingletonScope()
 container.bind(TYPES.Database).to(MemoryData).inSingletonScope()
 container.bind<CartRepository>(TYPES.CartRepository).to(CartMemoryRepositoryImpl)
 container.bind<ItemRepository>(TYPES.ItemRepository).to(ItemMemoryRepositoryImpl)

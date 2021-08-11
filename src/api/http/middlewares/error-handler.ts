@@ -1,21 +1,11 @@
 import Joi from 'joi'
 import { Boom, badRequest, badImplementation } from '@hapi/boom'
 import { RouterContext } from '@koa/router'
-// import { ResourceNotFound, ValidationError } from '../../../libs/errors'
-import { DataError } from '../../../shared/domain'
 
 const mapErrorToHttpResponse = (err: Error | Boom): Boom => {
   if (err instanceof Boom) {
     return err
   }
-
-  // if (err instanceof ResourceNotFound) {
-  //   return Boom.notFound(err.message)
-  // }
-
-  // if (err instanceof ValidationError) {
-  //   return Boom.badRequest(err.message)
-  // }
 
   if (err instanceof Joi.ValidationError) {
     return badRequest('Invalid input', err.details)
