@@ -22,7 +22,9 @@ export class EditCartItemUseCase {
     async execute(cartId: string,itemId: string, quantity: number): Promise<Cart> {
       const cart = await this._getCart(cartId);
       const item = await this.itemRepository.getById(itemId);
-      item.updateQuantity(item.quantity + quantity);
+      const itemInCart = cart.items.find(i => i.id === itemId);
+      const returnQty = itemInCart.quantity - quantity;
+      item.updateQuantity(item.quantity + returnQty);
       cart.editItem(itemId, quantity);
       await this.itemRepository.update(item);
       return this.cartRepository.update(cart);
