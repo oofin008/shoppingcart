@@ -84,12 +84,13 @@ export class HTTPController {
       ctx.request.body as Record<string, unknown>,
     )
     const cartCheck = await this._getCartUseCase.execute(cartId);
-    const itemQuantity = cartCheck.items.find((item) => item.id === itemId)
-    if(itemQuantity.quantity + quantity < 0) {
+    const itemInCart = cartCheck.items.find((item) => item.id === itemId)
+    const modifyQty = itemInCart.quantity + quantity
+    if(modifyQty < 0) {
       throw new Error(`Modify quantity exceed number in cart`)
     }
 
-    const cart = await this._editCartItemUseCase.execute(cartId, itemId, quantity)
+    const cart = await this._editCartItemUseCase.execute(cartId, itemId, modifyQty)
     ctx.body = cart.unmarshal()
   }
 
