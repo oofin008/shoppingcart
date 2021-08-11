@@ -13,7 +13,7 @@ import {
   UpdateItemInStockUseCase
 } from '../../domains'
 import { validateCreateItem } from './validation/item'
-import { validateAddToCart } from './validation/cart'
+import { validateAddToCart, validateModifyCart } from './validation/cart'
 
 @injectable()
 export class HTTPController {
@@ -80,9 +80,14 @@ export class HTTPController {
 
   public async editCartItem(ctx: RouterContext): Promise<void> {
     const { cartId } = ctx.params
-    const { itemId, quantity } = validateAddToCart(
+    const { itemId, quantity } = validateModifyCart(
       ctx.request.body as Record<string, unknown>,
     )
+    const cartCheck = await this._getCartUseCase.execute(cartId);
+    const itemQuantity = cartCheck.items.find((item) => item.id === itemId).quantity
+    if(itemQuantity + quantity < 0) {
+      throw new Error(`Modify quantity exceed number in cart`)
+    }
 
     const cart = await this._editCartItemUseCase.execute(cartId, itemId, quantity)
     ctx.body = cart.unmarshal()

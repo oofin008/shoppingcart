@@ -16,7 +16,7 @@ export class HTTPRouter {
       .post('/cart/:cartId/item', (ctx: RouterContext) =>
         this._controller.addToCart(ctx),
       )
-      .put('./cart/:cartId/item', (ctx: RouterContext) =>
+      .put('/cart/:cartId/item', (ctx: RouterContext) =>
         this._controller.editCartItem(ctx),
       )
       .delete('/cart/:cartId/item/:itemId', (ctx: RouterContext) =>

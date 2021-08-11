@@ -28,7 +28,7 @@ export class Item{
     }
   }
 
-  public updateItem(quantity: number): void {
+  public updateQuantity(quantity: number): void {
     this._quantity = quantity
   }
 

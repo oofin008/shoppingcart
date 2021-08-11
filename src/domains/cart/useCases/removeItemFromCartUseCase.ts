@@ -24,7 +24,7 @@ export class RemoveItemFromCartUseCase {
     const cart = await this._getCart(id);
     const item = await this.itemRepository.getById(itemId);
     const itemToReturn = cart.items.find(i => i.id === itemId);
-    item.updateItem(item.quantity + itemToReturn.quantity);
+    item.updateQuantity(item.quantity + itemToReturn.quantity);
     cart.removeItem(itemId);
     await this.itemRepository.update(item);
     return this.cartRepository.update(cart);
