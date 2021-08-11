@@ -1,5 +1,5 @@
 import { ItemRepository } from "../itemRepository";
-import { Either, DataError } from "../../../shared/domain";
+import { Either, DataError, EitherAsync } from "../../../shared/domain";
 import { ItemProps } from "../itemInterface";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../../types";

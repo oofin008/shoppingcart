@@ -19,14 +19,6 @@ export class Item{
     return instance
   }
 
-  public getItem(quantity: number): boolean {
-    if (this.hasStock(quantity)) {
-      this._quantity -= quantity
-      return true
-    }
-    return false;
-  }
-
   public unmarshal(): ItemProps {
     return {
       id: this.id,
@@ -34,10 +26,6 @@ export class Item{
       price: parseFloat(this.price.toString()),
       quantity: parseInt(this.quantity.toString())
     }
-  }
-
-  private hasStock(quantity: number): boolean {
-    return this._quantity >= quantity
   }
 
   get id(): string {

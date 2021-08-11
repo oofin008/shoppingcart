@@ -14,15 +14,15 @@ export class ItemMemoryRepositoryImpl implements ItemRepository {
   //   this._database = memoryData;
   // }
 
-  public async getAll(): Promise<Either<DataError, Item[]>> {
+  public async getAll(): Promise<Either<DataError, ItemProps[]>> {
     return new Promise((resolve, _reject) => {
       setTimeout(async () => {
         try {
           const itemInMemory = await (<Promise<ItemProps[]>>(
             this._database.items.findAll()
           ));
-          const itemList = itemInMemory.map((item) => Item.create(item));
-          resolve(Either.right(itemList));
+          // const itemList = itemInMemory.map((item) => Item.create(item));
+          resolve(Either.right(itemInMemory));
         } catch (error) {
           resolve(Either.left({ kind: "UnexpectedError", error }));
         }

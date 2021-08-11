@@ -10,12 +10,12 @@ export class HTTPRouter {
   get(): Router {
     return new Router()
       .get('/item', (ctx: RouterContext) => this._controller.listItems(ctx))
-      // .get('/item/:id', (ctx: RouterContext) => this._controller.getItem(ctx))
+      .get('/item/:id', (ctx: RouterContext) => this._controller.getItem(ctx))
       .post('/item', (ctx: RouterContext) => this._controller.createItem(ctx))
-      // .get('/cart/:id', (ctx: RouterContext) => this._controller.getCart(ctx))
-      // .post('/cart/:cartId/item', (ctx: RouterContext) =>
-      //   this._controller.addToCart(ctx),
-      // )
+      .get('/cart/:id', (ctx: RouterContext) => this._controller.getCart(ctx))
+      .post('/cart/:cartId/item', (ctx: RouterContext) =>
+        this._controller.addToCart(ctx),
+      )
       // .delete('/cart/:cartId/item/:itemId', (ctx: RouterContext) =>
       //   this._controller.removeFromCart(ctx),
       // )

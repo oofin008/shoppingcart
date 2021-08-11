@@ -15,6 +15,7 @@ import {
 } from '../../domains'
 import { validateCreateItem } from './validation/item'
 import { validateAddToCart } from './validation/cart'
+import { Either } from '../../shared/domain'
 
 @injectable()
 export class HTTPController {
@@ -31,10 +32,10 @@ export class HTTPController {
     ctx.body = items.map((item) => item)
   }
 
-  // public async getItem(ctx: RouterContext): Promise<void> {
-  //   const item = await this._itemService.getById(ctx.params.id)
-  //   ctx.body = item.unmarshal()
-  // }
+  public async getItem(ctx: RouterContext): Promise<void> {
+    const item = await this._getItemByIdUseCase.execute(ctx.params.id)
+    ctx.body = item.map((item) => item.unmarshal())
+  }
 
   public async createItem(ctx: RouterContext): Promise<void> {
     const input = validateCreateItem(
@@ -45,22 +46,24 @@ export class HTTPController {
     ctx.body = created.map(item => item.unmarshal())
   }
 
-  // public async getCart(ctx: RouterContext): Promise<void> {
-  //   const cart = await this._getCartUseCase.execute(ctx.params.id)
-  //   ctx.body = cart.map(() => cart)
-  // }
+  public async getCart(ctx: RouterContext): Promise<void> {
+    const cart = await this._getCartUseCase.execute(ctx.params.id)
+    ctx.body = cart.map(() => cart)
+  }
 
-  // public async addToCart(ctx: RouterContext): Promise<void> {
-  //   const { cartId } = ctx.params
-  //   const { itemId, quantity } = validateAddToCart(
-  //     ctx.request.body as Record<string, unknown>,
-  //   )
+  public async addToCart(ctx: RouterContext): Promise<void> {
+    const { cartId } = ctx.params
+    const { itemId, quantity } = validateAddToCart(
+      ctx.request.body as Record<string, unknown>,
+    )
+    const cartResult = await this._getCartUseCase.execute(cartId)
+    if(cartResult.isRight) {
+      const item = await this._getItemByIdUseCase.execute(itemId)
+      const cart = await this._addItemToCartUseCase.execute(cartId, item, quantity)
 
-  //   const item = await this._itemService.getById(itemId)
-  //   const cart = await this._cartService.add(cartId, item, quantity)
 
-  //   ctx.body = cart.unmarshal()
-  // }
+    ctx.body = cart.unmarshal()
+  }
 
   // public async removeFromCart(ctx: RouterContext): Promise<void> {
   //   const { cartId, itemId } = ctx.params
