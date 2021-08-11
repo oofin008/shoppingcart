@@ -3,13 +3,16 @@ import { Cart } from "../cartEntity";
 import { CartId } from "../cartInterface";
 import { ItemProps } from "../../item/itemInterface";
 import { Either, DataError, EitherAsync } from "../../../shared/domain";
+import { inject, injectable } from "inversify";
+import { TYPES } from "../../../types";
 
+@injectable()
 export class AddItemToCartUseCase {
-  private cartRepository: CartRepository;
+  @inject(TYPES.CartRepository) private cartRepository: CartRepository;
 
-  constructor(cartRepository: CartRepository) {
-    this.cartRepository = cartRepository;
-  }
+  // constructor(cartRepository: CartRepository) {
+  //   this.cartRepository = cartRepository;
+  // }
 
   async execute(cartId: CartId, item: ItemProps): Promise<Either<DataError, Cart>> {
     const cartResult = EitherAsync.fromPromise(

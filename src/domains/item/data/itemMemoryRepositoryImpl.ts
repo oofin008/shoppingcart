@@ -3,13 +3,16 @@ import { ItemProps } from "../itemInterface";
 import { ItemRepository } from "../itemRepository";
 import { DataError, Either } from "../../../shared/domain";
 import { MemoryData } from "../../../shared/data/memoryData";
+import { inject, injectable } from "inversify";
+import { TYPES } from "../../../types";
 
+@injectable()
 export class ItemMemoryRepositoryImpl implements ItemRepository {
-  private _database: MemoryData;
+  @inject(TYPES.Database) private _database: MemoryData;
 
-  constructor(memoryData: MemoryData) {
-    this._database = memoryData;
-  }
+  // constructor(memoryData: MemoryData) {
+  //   this._database = memoryData;
+  // }
 
   public async getAll(): Promise<Either<DataError, Item[]>> {
     return new Promise((resolve, _reject) => {

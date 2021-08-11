@@ -1,4 +1,5 @@
 import cuid from 'cuid'
+import { injectable } from 'inversify';
 
 class Collection {
   private data: Record<string, unknown> = {}
@@ -28,6 +29,7 @@ class Collection {
   }
 }
 
+@injectable()
 export class MemoryData {
   public items = new Collection()
   public cart = new Collection()

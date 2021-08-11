@@ -1,16 +1,19 @@
+import { injectable, inject } from 'inversify'
 import { Cart } from "../cartEntity";
 import { CartProps } from '../cartInterface';
 import { CartRepository } from "../cartRepository";
 import { DataError, Either } from "../../../shared/domain";
 import { MemoryData } from '../../../shared/data/memoryData';
+import { TYPES } from '../../../types';
 
+@injectable()
 export class CartMemoryRepositoryImpl implements CartRepository {
 
-  private _database: MemoryData;
+  @inject(TYPES.Database) private _database: MemoryData;
 
-  constructor(memoryData: MemoryData) {
-    this._database = memoryData;
-  }
+  // constructor(memoryData: MemoryData) {
+  //   this._database = memoryData;
+  // }
 
   create(cart: CartProps): Promise<Either<DataError, Cart>> {
     return new Promise((resolve, _reject) => {
