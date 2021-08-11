@@ -1,10 +1,17 @@
-import { Entity } from '../../shared/entity'
-import { ItemProps } from './itemInterface';
+import { ItemProps, ItemId } from './itemInterface';
 
-export class Item extends Entity<ItemProps> {
+export class Item{
+  private _id: ItemId;
+  private _title: string;
+  private _price: number;
+  private _quantity: number;
+
+
   private constructor(props: ItemProps) {
-    const { id, ...data } = props
-    super(data, id)
+    this._id = props.id
+    this._title = props.title
+    this._price = props.price
+    this._quantity = props.quantity
   }
 
   public static create(props: ItemProps): Item {
@@ -15,21 +22,39 @@ export class Item extends Entity<ItemProps> {
   public unmarshal(): ItemProps {
     return {
       id: this.id,
-      displayName: this.displayName,
+      title: this._title,
       price: parseFloat(this.price.toString()),
+      quantity: parseInt(this.quantity.toString())
     }
+  }
+
+  public updateQuantity(quantity: number): void {
+    this._quantity = quantity
+  }
+
+  public getItem(quantity: number): boolean {
+    if (this.hasStock(quantity)) {
+      this._quantity -= quantity
+      return true
+    }
+    return false;
+  }
+
+  private hasStock(quantity: number): boolean {
+    return this._quantity >= quantity
   }
 
   get id(): string {
     return this._id
   }
-
-  get displayName(): string {
-    return this.props.displayName
+  get title(): string {
+    return this._title
   }
-
   get price(): number {
-    return this.props.price
+    return this._price
+  }
+  get quantity(): number {
+    return this._quantity
   }
 
 }

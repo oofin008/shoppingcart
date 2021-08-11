@@ -4,10 +4,11 @@
     "moduleResolution": "node",
     "target": "es6",
     "esModuleInterop": true,
-    "types": ["mocha"],
+    "types": ["reflect-metadata","mocha"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "rootDir": "./"
   },
   "exclude": [
     "node_modules",

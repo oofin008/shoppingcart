@@ -1,3 +1,4 @@
-export * from './addItemToCart';
-export * from './clearItemInCart';
-export * from './getCart';
+export * from './addItemToCartUseCase';
+export * from './editCartItemUseCase';
+export * from './removeItemFromCartUseCase';
+export * from './getCartUseCase';

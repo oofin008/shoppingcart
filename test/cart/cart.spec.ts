@@ -1,81 +1,157 @@
-import { expect } from 'chai';
-import faker from 'faker';
-import _ from 'lodash';
-import { Cart } from '../../src/domains/cart/cartEntity';
-import { ItemProps } from '../../src/domains/item/itemInterface';
+import { expect } from "chai";
+import faker from "faker";
+import _ from "lodash";
+import { Cart } from "../../src/domains/cart/cartEntity";
+import { CartProps } from "../../src/domains/cart/cartInterface";
+import { ItemProps } from "../../src/domains/item/itemInterface";
 
-describe('Cart Entity', () => {
+describe("Cart Entity", () => {
+  describe("constructor", () => {
+    it("should return totalPrice 0 and empty items if shopping cart is created using constructor with empty items", () => {
+      const shoppingCart = Cart.create(givenMockShoppingCart([]));
 
-  it('should able to create Cart', () => {
-    const cart = Cart.create({id: faker.datatype.uuid(), products:[]});
-    expect(cart.id).to.be.an('string');
+      expect(shoppingCart.items).to.be.empty;
+      expect(shoppingCart.totalPrice).to.equal(0);
+      expect(shoppingCart.totalItems).to.equal(0);
+    });
+
+    it("should return totalPrice equal to item price and item if shopping cart is created using constructor with 1 item", () => {
+      const mockItems = [givenShoppingCartItem(1, 29.99)];
+
+      const shoppingCart = Cart.create(givenMockShoppingCart(mockItems));
+
+      expect(shoppingCart.items).to.equal(mockItems);
+      expect(shoppingCart.totalPrice).to.equal(29.99);
+      expect(shoppingCart.totalItems).to.equal(1);
+    });
+
+    it("should return expected totalPrice and items if shopping cart is created using constructor with 2 items with quantity = 1", () => {
+      const mockItems = [
+        givenShoppingCartItem(1, 29.99),
+        givenShoppingCartItem(1, 39.94),
+      ];
+      const shoppingCart = Cart.create(givenMockShoppingCart(mockItems));
+
+      expect(shoppingCart.items).to.equal(mockItems);
+      expect(shoppingCart.totalPrice).to.lessThanOrEqual(69.93); // dilemma of comparing floating-point values
+      expect(shoppingCart.totalItems).to.equal(2);
+    });
+
+    it("should return expected totalPrice and items if shopping cart is created using constructor with 2 items with quantity > 1", () => {
+      const mockItems = [
+        givenShoppingCartItem(2, 29.99),
+        givenShoppingCartItem(5, 39.94),
+      ];
+      const shoppingCart = Cart.create(givenMockShoppingCart(mockItems));
+
+      expect(shoppingCart.items).to.equal(mockItems);
+      expect(shoppingCart.totalPrice).to.equal(259.68);
+      expect(shoppingCart.totalItems).to.equal(7);
+    });
   });
 
-  it('should able to add item to Cart', () => {
-    // Arrange
-    const item: ItemProps = {
-      id: faker.datatype.uuid(),
-      displayName: faker.name.findName(),
-      price: faker.datatype.number(),
-    }
-    const cart = Cart.create({id: faker.datatype.uuid(), products:[]});
-    const mockItem = { item:item, quantity:10 };
-    
-    // Act
-    cart.add(item, 10);
+  describe("addItem", () => {
+    it("should return expected totalPrice and items if item with quantity 1 is added", () => {
+      const mockItems = [givenShoppingCartItem(1, 29.99)];
+      const shoppingCart = Cart.create(givenMockShoppingCart(mockItems));
 
-    // Assert
-    expect(_.some(cart.products, mockItem)).to.be.true;
+      shoppingCart.addItem(givenShoppingCartItem(1, 39.94));
+
+      expect(shoppingCart.items).to.has.length(2);
+      expect(shoppingCart.totalPrice).to.lessThanOrEqual(69.93);
+      expect(shoppingCart.totalItems).to.equal(2);
+    });
+
+    it("should return expected totalPrice and items if item with quantity > 1 is added", () => {
+      const mockItems = [givenShoppingCartItem(1, 29.99)];
+      const shoppingCart = Cart.create(givenMockShoppingCart(mockItems));
+
+      shoppingCart.addItem(givenShoppingCartItem(3, 39.94));
+
+      expect(shoppingCart.items).to.has.length(2);
+      expect(shoppingCart.totalPrice).to.equal(149.81);
+      expect(shoppingCart.totalItems).to.equal(4);
+    });
+
+    it("should increment quantity to existed item and totalPrice if add a existed item again", () => {
+      const items = [givenShoppingCartItem(1, 29.99)];
+      const shoppingCart = Cart.create(givenMockShoppingCart(items));
+
+      shoppingCart.addItem(items[0]);
+
+      expect(shoppingCart.items).to.has.length(1);
+      expect(shoppingCart.totalPrice).to.equal(59.98);
+      expect(shoppingCart.totalItems).to.equal(2);
+    });
   });
 
-  it('should able to remove item from Cart', () => {
-    // Arrange
-    const mockItemId = faker.datatype.uuid();
-    const item1: ItemProps = {
-      id: mockItemId,
-      displayName: faker.name.findName(),
-      price: faker.datatype.number(),
-    }
-    const item2: ItemProps = {
-      id: faker.datatype.uuid(),
-      displayName: faker.name.findName(),
-      price: faker.datatype.number(),
-    }
-    const cart = Cart.create({id: faker.datatype.uuid(), products:[]});
-    const mockItem1 = { item:item1, quantity:10 };
-    const mockItem2 = { item:item2, quantity:10 };
-    
+  describe("removeItem", () => {
+    it("should return totalPrice 0 and empty items if remove unique item", () => {
+      const mockItems = [givenShoppingCartItem(1, 29.99)];
+      const shoppingCart = Cart.create(givenMockShoppingCart(mockItems));
 
-    // Act
-    cart.add(item1, 10);
-    cart.add(item2, 10);
-    cart.remove(mockItemId);
+      shoppingCart.removeItem(mockItems[0].id);
 
-    // Assert
-    expect(_.some(cart.products, mockItem1)).to.be.false;
-    expect(_.some(cart.products, mockItem2)).to.be.true;
+      expect(shoppingCart.items).to.be.empty;
+      expect(shoppingCart.totalPrice).to.equal(0);
+      expect(shoppingCart.totalItems).to.equal(0);
+    });
+
+    it("should return expected totalPrice and items if remove item", () => {
+      const mockItems = [
+        givenShoppingCartItem(1, 29.99),
+        givenShoppingCartItem(5, 39.94),
+      ];
+      const shoppingCart = Cart.create(givenMockShoppingCart(mockItems));
+
+      shoppingCart.removeItem(mockItems[1].id);
+
+      expect(shoppingCart.items).to.has.length(1);
+      expect(shoppingCart.totalPrice).to.equal(29.99);
+      expect(shoppingCart.totalItems).to.equal(1);
+    });
   });
 
-  it('should able to clear item in Cart', () => {
-    // Arrange
-    const item1: ItemProps = {
-      id: faker.datatype.uuid(),
-      displayName: faker.name.findName(),
-      price: faker.datatype.number(),
-    }
-    const item2: ItemProps = {
-      id: faker.datatype.uuid(),
-      displayName: faker.name.findName(),
-      price: faker.datatype.number(),
-    }
-    const cart = Cart.create({id: faker.datatype.uuid(), products:[]});
+  describe("editItem", () => {
+    it("should return expected totalPrice and items if edit quantity to unique item", () => {
+      const mockItems = [givenShoppingCartItem(1, 29.99)];
+      const shoppingCart = Cart.create(givenMockShoppingCart(mockItems));
 
-    // Act
-    cart.add(item1, faker.datatype.number(500));
-    cart.add(item2, faker.datatype.number(500));
-    cart.empty();
+      shoppingCart.editItem(mockItems[0].id, 2);
 
-    // Assert
-    expect(cart.products.length).to.equal(0);
+      expect(shoppingCart.items).to.has.length(1);
+      expect(shoppingCart.totalPrice).to.equal(59.98);
+      expect(shoppingCart.totalItems).to.equal(2);
+    });
+
+    it("should return expected totalPrice and items if edit quantity to a item", () => {
+      const mockItems = [
+        givenShoppingCartItem(1, 29.99),
+        givenShoppingCartItem(5, 39.94),
+      ];
+      const shoppingCart = Cart.create(givenMockShoppingCart(mockItems));
+
+      shoppingCart.editItem(mockItems[0].id, 2);
+
+      expect(shoppingCart.items).to.has.length(2);
+      expect(shoppingCart.totalPrice).to.equal(259.68);
+      expect(shoppingCart.totalItems).to.equal(7);
+    });
   });
 });
+
+function givenShoppingCartItem(quantity = 1, price = 0): ItemProps {
+  return {
+    id: faker.datatype.uuid(),
+    title: faker.name.findName(),
+    price: price,
+    quantity: quantity,
+  };
+}
+
+function givenMockShoppingCart(items: ItemProps[]): CartProps {
+  return {
+    id: faker.datatype.uuid(),
+    items,
+  };
+}
