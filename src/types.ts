@@ -6,9 +6,7 @@ const TYPES = {
   HTTPController: Symbol.for('HTTPController'),
   HTTPRouter: Symbol.for('HTTPRouter'),
 
-  // CartService: Symbol.for('CartService'),
   CartRepository: Symbol.for('CartRepository'),
-  // ItemService: Symbol.for('ItemService'),
   ItemRepository: Symbol.for('ItemRepository'),
 
   AddItemToCartUseCase: Symbol.for('AddItemToCartUseCase'),
@@ -17,6 +15,7 @@ const TYPES = {
   EditCartItemUseCase: Symbol.for('EditCartItemUseCase'),
 
   AddItemToStockUseCase: Symbol.for('AddItemToStockUseCase'),
+  UpdateItemStockUseCase: Symbol.for('UpdateItemStockUseCase'),
   GetItemByIdUseCase: Symbol.for('GetItemByIdUseCase'),
   GetItemUseCase: Symbol.for('GetItemUseCase'),
 }

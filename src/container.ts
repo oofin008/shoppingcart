@@ -11,6 +11,7 @@ import {
   GetCartUseCase,
   EditCartItemUseCase,
   AddItemToStockUseCase,
+  UpdateItemInStockUseCase,
   GetItemsUseCase,
   GetItemByIdUseCase
 } from './domains'
@@ -33,13 +34,13 @@ container.bind(TYPES.HTTPController).to(HTTPController).inSingletonScope()
 container.bind(TYPES.HTTPRouter).to(HTTPRouter).inSingletonScope()
 container.bind<IServer>(TYPES.Server).to(Server).inSingletonScope()
 
-// container.bind(TYPES.CartService).to(CartService)
-// container.bind(TYPES.ItemService).to(ItemService)
 container.bind(TYPES.AddItemToCartUseCase).to(AddItemToCartUseCase)
 container.bind(TYPES.RemoveItemFromCartUseCase).to(RemoveItemFromCartUseCase)
 container.bind(TYPES.GetCartUseCase).to(GetCartUseCase)
 container.bind(TYPES.EditCartItemUseCase).to(EditCartItemUseCase)
+
 container.bind(TYPES.AddItemToStockUseCase).to(AddItemToStockUseCase)
+container.bind(TYPES.UpdateItemStockUseCase).to(UpdateItemInStockUseCase)
 container.bind(TYPES.GetItemUseCase).to(GetItemsUseCase)
 container.bind(TYPES.GetItemByIdUseCase).to(GetItemByIdUseCase)
 

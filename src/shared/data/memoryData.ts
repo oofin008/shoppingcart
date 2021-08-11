@@ -27,6 +27,10 @@ class Collection {
     this.data[id] = value
     return this.data[id] as T
   }
+
+  async remove(id: string): Promise<void> {
+    delete this.data[id]
+  }
 }
 
 @injectable()

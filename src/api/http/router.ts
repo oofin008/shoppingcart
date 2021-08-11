@@ -16,11 +16,11 @@ export class HTTPRouter {
       .post('/cart/:cartId/item', (ctx: RouterContext) =>
         this._controller.addToCart(ctx),
       )
-      // .delete('/cart/:cartId/item/:itemId', (ctx: RouterContext) =>
-      //   this._controller.removeFromCart(ctx),
-      // )
-      // .post('/cart/:cartId/clean', (ctx: RouterContext) =>
-      //   this._controller.emptyCart(ctx),
-      // )
+      .put('./cart/:cartId/item', (ctx: RouterContext) =>
+        this._controller.editCartItem(ctx),
+      )
+      .delete('/cart/:cartId/item/:itemId', (ctx: RouterContext) =>
+        this._controller.removeFromCart(ctx),
+      )
   }
 }
