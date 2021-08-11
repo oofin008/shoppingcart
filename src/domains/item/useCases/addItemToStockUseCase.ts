@@ -9,10 +9,6 @@ import { TYPES } from "../../../types";
 export class AddItemToStockUseCase {
     @inject(TYPES.ItemRepository) private itemRepository: ItemRepository;
 
-    // constructor(itemRepository: ItemRepository) {
-    //     this.itemRepository = itemRepository;
-    // }
-
     execute(item: ItemProps): Promise<Either<DataError, Item>> {
       return this.itemRepository.create(item);
     }

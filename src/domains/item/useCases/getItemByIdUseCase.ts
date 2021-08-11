@@ -8,10 +8,6 @@ import { TYPES } from "../../../types";
 export class GetItemByIdUseCase {
     @inject(TYPES.ItemRepository) private itemRepository: ItemRepository;
 
-    // constructor(itemRepository: ItemRepository) {
-    //     this.itemRepository = itemRepository;
-    // }
-
     execute(id:string): Promise<Either<DataError, Item>> {
       return this.itemRepository.getById(id);
     }
