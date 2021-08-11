@@ -10,69 +10,30 @@ import { TYPES } from "../../../types";
 export class ItemMemoryRepositoryImpl implements ItemRepository {
   @inject(TYPES.Database) private _database: MemoryData;
 
-  // constructor(memoryData: MemoryData) {
-  //   this._database = memoryData;
-  // }
-
-  public async getAll(): Promise<Either<DataError, ItemProps[]>> {
-    return new Promise((resolve, _reject) => {
-      setTimeout(async () => {
-        try {
-          const itemInMemory = await (<Promise<ItemProps[]>>(
-            this._database.items.findAll()
-          ));
-          // const itemList = itemInMemory.map((item) => Item.create(item));
-          resolve(Either.right(itemInMemory));
-        } catch (error) {
-          resolve(Either.left({ kind: "UnexpectedError", error }));
-        }
-      }, 100);
-    });
+  public async findAll(): Promise<Item[]> {
+    const items = await (<Promise<ItemProps[]>>(
+      this._database.items.findAll()
+    ));
+    return items.map(item => Item.create(item));
   }
 
-  public async getById(id: string): Promise<Either<DataError, Item>> {
-    return new Promise((resolve, _reject) => {
-      setTimeout(async () => {
-        try {
-          const itemInMemory = await this._database.items.getById<ItemProps>(id);
-          if (!itemInMemory) {
-            throw new Error("Item not found");
-          }
-          const itemObject = Item.create(itemInMemory);
-          resolve(Either.right(itemObject));
-        } catch (error) {
-          resolve(Either.left({ kind: "UnexpectedError", error }));
-        }
-      }, 100);
-    });
+  public async getById(id: string): Promise<Item> {
+    const item = await this._database.items.getById<ItemProps>(id)
+    if(!item) {
+      throw new Error(`Item with id ${id} not found`);
+    }
+    return Item.create(item);
   }
 
-  public async create(item: ItemProps): Promise<Either<DataError, Item>> {
-    return new Promise((resolve, _reject) => {
-      setTimeout(async () => {
-        try {
-          const inserted = await this._database.items.insert<ItemProps>(item);
-          const itemObject = Item.create(inserted);
-          resolve(Either.right(itemObject));
-        } catch (error) {
-          resolve(Either.left({ kind: "UnexpectedError", error }));
-        }
-      }, 100);
-    });
+  public async insert(item: Item): Promise<Item> {
+    const dtoItem = item.unmarshal();
+    const inserted = await this._database.items.insert(dtoItem);
+    return Item.create(inserted);
   }
 
-  public async update(item: Item): Promise<Either<DataError, Item>> {
-    return new Promise((resolve, _reject) => {
-      setTimeout(async () => {
-        try {
-          const dtoItemm = item.unmarshal();
-          const updated = await this._database.items.update<ItemProps>(item.id, dtoItemm);
-          const itemObject = Item.create(updated);
-          return Item.create(itemObject);
-        } catch (error) {
-          resolve(Either.left({ kind: "UnexpectedError", error }));
-        }
-      }, 100);
-    });
+  public async update(item: Item): Promise<Item> {
+    const dtoItem = item.unmarshal();
+    const updated = await this._database.items.update<ItemProps>(item.id,dtoItem);
+    return Item.create(updated);
   }
 }

@@ -1,6 +1,5 @@
 import { ItemRepository } from "../itemRepository";
-import { Either, DataError, EitherAsync } from "../../../shared/domain";
-import { ItemProps } from "../itemInterface";
+import { Item } from "../itemEntity";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../../types";
 
@@ -8,7 +7,7 @@ import { TYPES } from "../../../types";
 export class GetItemsUseCase {
     @inject(TYPES.ItemRepository) private itemRepository: ItemRepository;
 
-    execute(): Promise<Either<DataError, ItemProps[]>> {
-        return this.itemRepository.getAll();
+    execute(): Promise<Item[]> {
+        return this.itemRepository.findAll();
     }
 }

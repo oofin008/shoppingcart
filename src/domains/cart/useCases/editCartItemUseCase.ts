@@ -8,21 +8,19 @@ import { TYPES } from "../../../types";
 export class EditCartItemUseCase {
     @inject(TYPES.CartRepository) private cartRepository: CartRepository;
 
-    // constructor(cartRepository: CartRepository) {
-    //     this.cartRepository = cartRepository;
-    // }
+    private async _getCart(id: string): Promise<Cart> {
+      try {
+        const cart = await this.cartRepository.getById(id);
+        return cart
+      } catch (error) {
+        const emptyCart = Cart.create({id, items: []});
+        return this.cartRepository.create(emptyCart);
+      }
+    }
 
-    async execute(cartId: string,itemId: string, quantity: number): Promise<Either<DataError, Cart>> {
-        const cartResult = EitherAsync.fromPromise(this.cartRepository.getById(cartId));
-
-        return cartResult
-            .flatMap(async cart => {
-                cart.editItem(itemId, quantity);
-
-                const saveResult = await this.cartRepository.update(cart);
-
-                return saveResult.map(() => cart);
-            })
-            .run();
+    async execute(cartId: string,itemId: string, quantity: number): Promise<Cart> {
+      const cart = await this._getCart(cartId);
+      cart.editItem(itemId, quantity);
+      return this.cartRepository.update(cart);
     }
 }

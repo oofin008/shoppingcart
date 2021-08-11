@@ -1,10 +1,8 @@
-import { ItemProps } from './itemInterface';
 import { Item } from './itemEntity';
-import { Either, DataError } from '../../shared/domain';
 
 export interface ItemRepository {
-  getAll(): Promise<Item[]>;
+  findAll(): Promise<Item[]>;
   getById(id: string): Promise<Item>;
-  create(item: ItemProps): Promise<Item>;
+  insert(item: Item): Promise<Item>;
   update(item: Item): Promise<Item>;
 }

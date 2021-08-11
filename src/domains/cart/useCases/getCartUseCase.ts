@@ -8,11 +8,7 @@ import { TYPES } from "../../../types";
 export class GetCartUseCase {
     @inject(TYPES.CartRepository) private cartRepository: CartRepository;
 
-    // constructor(cartRepository: CartRepository) {
-    //     this.cartRepository = cartRepository;
-    // }
-
-    execute(cartId: string): Promise<Either<DataError, Cart>> {
-        return this.cartRepository.getById(cartId);
+    execute(cartId: string): Promise<Cart> {
+      return this.cartRepository.getById(cartId);
     }
 }

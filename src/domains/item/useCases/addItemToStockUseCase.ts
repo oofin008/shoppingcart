@@ -9,7 +9,7 @@ import { TYPES } from "../../../types";
 export class AddItemToStockUseCase {
     @inject(TYPES.ItemRepository) private itemRepository: ItemRepository;
 
-    execute(item: ItemProps): Promise<Either<DataError, Item>> {
-      return this.itemRepository.create(item);
+    execute(item: Item): Promise<Item> {
+      return this.itemRepository.insert(item);
     }
 }

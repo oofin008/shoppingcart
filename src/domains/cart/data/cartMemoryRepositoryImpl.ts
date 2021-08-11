@@ -11,53 +11,23 @@ export class CartMemoryRepositoryImpl implements CartRepository {
 
   @inject(TYPES.Database) private _database: MemoryData;
 
-  // constructor(memoryData: MemoryData) {
-  //   this._database = memoryData;
-  // }
-
-  create(cart: CartProps): Promise<Either<DataError, Cart>> {
-    return new Promise((resolve, _reject) => {
-      setTimeout(async () => {
-        try {
-          const inserted = await this._database.cart.insert<CartProps>(cart);
-          const cartObject = Cart.create(inserted);
-          resolve(Either.right(cartObject));
-        } catch (error) {
-          resolve(Either.left({ kind: "UnexpectedError", error }));
-        }
-      }, 100);
-    });
+  async create(cart: Cart): Promise<Cart> {
+    const dtoCart = cart.unmarshal();
+    const inserted = await this._database.cart.insert<CartProps>(dtoCart);
+    return Cart.create(inserted);
   }
 
-  getById(cartId: string): Promise<Either<DataError, Cart>> {
-    return new Promise((resolve, _reject) => {
-      setTimeout(async () => {
-        try {
-          const cartInMemory = await this._database.cart.getById<CartProps>(cartId);
-          if(!cartInMemory) {
-            throw new Error("Cart not found");
-          }
-          const cartObject = Cart.create(cartInMemory);
-          resolve(Either.right(cartObject));
-        } catch (error) {
-          resolve(Either.left({ kind: "UnexpectedError", error }));
-        }
-      }, 100);
-    });
+  async getById(cartId: string): Promise<Cart> {
+    const cart = await this._database.cart.getById<CartProps>(cartId);
+    if(!cart) {
+      throw new Error("Cart not found");
+    }
+    return Cart.create(cart);
   }
 
-  update(cart: Cart): Promise<Either<DataError, Cart>> {
-    return new Promise((resolve, _reject) => {
-      setTimeout(async () => {
-        try {
-          const dtoCart = cart.unmarshal();
-          const updated = await this._database.cart.update<CartProps>(cart.id, dtoCart);
-          const cartObject = Cart.create(updated);
-          resolve(Either.right(cartObject));
-        } catch (error) {
-          resolve(Either.left({ kind: "UnexpectedError", error }));
-        }
-      }, 100);
-    });
+  async update(cart: Cart): Promise<Cart> {
+    const dtoCart = cart.unmarshal();
+    const updated = await this._database.cart.update<CartProps>(cart.id, dtoCart);
+    return Cart.create(updated);
   }
 }

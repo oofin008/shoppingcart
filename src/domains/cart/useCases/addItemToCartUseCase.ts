@@ -2,7 +2,6 @@ import { CartRepository } from "../cartRepository";
 import { Cart } from "../cartEntity";
 import { CartId } from "../cartInterface";
 import { ItemProps } from "../../item/itemInterface";
-import { Either, DataError, EitherAsync } from "../../../shared/domain";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../../types";
 
@@ -10,30 +9,19 @@ import { TYPES } from "../../../types";
 export class AddItemToCartUseCase {
   @inject(TYPES.CartRepository) private cartRepository: CartRepository;
 
-  // constructor(cartRepository: CartRepository) {
-  //   this.cartRepository = cartRepository;
-  // }
+  private async _getCart(id: string): Promise<Cart> {
+    try {
+      const cart = await this.cartRepository.getById(id);
+      return cart
+    } catch (error) {
+      const emptyCart = Cart.create({id, items: []});
+      return this.cartRepository.create(emptyCart);
+    }
+  }
 
-  async execute(cartId: CartId, item: ItemProps): Promise<Either<DataError, Cart>> {
-    const cartResult = EitherAsync.fromPromise(
-      this.cartRepository.getById(cartId)
-    );
-
-    return cartResult
-      .flatMap(async (cart) => {
-        const cartItem:ItemProps = {
-          id: item.id,
-          title: item.title,
-          price: item.price,
-          quantity: 1,
-        };
-
-        cart.addItem(cartItem);
-
-        const saveResult = await this.cartRepository.update(cart);
-
-        return saveResult.map(() => cart);
-      })
-      .run();
+  async execute(id: CartId, item: ItemProps): Promise<Cart> {
+    const cart = await this._getCart(id);
+    cart.addItem(item);
+    return this.cartRepository.update(cart);
   }
 }
