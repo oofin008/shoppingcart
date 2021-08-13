@@ -7,7 +7,7 @@ import { TYPES } from "../../../types";
 
 @injectable()
 export class ItemMemoryRepositoryImpl implements ItemRepository {
-  @inject(TYPES.Database) private _database: MemoryData;
+  constructor(@inject(TYPES.Database) private _database: MemoryData) {}
 
   public async findAll(): Promise<Item[]> {
     const items = await (<Promise<ItemProps[]>>(

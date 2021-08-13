@@ -1,14 +1,14 @@
-import { injectable, inject } from 'inversify'
+import { injectable, inject } from "inversify";
 import { Cart } from "../cartEntity";
-import { CartProps } from '../cartInterface';
+import { CartProps } from "../cartInterface";
 import { CartRepository } from "../cartRepository";
-import { MemoryData } from '../../../shared/data/memoryData';
-import { TYPES } from '../../../types';
+import { MemoryData } from "../../../shared/data/memoryData";
+import { TYPES } from "../../../types";
 
+// this class should expose at infra layer
 @injectable()
 export class CartMemoryRepositoryImpl implements CartRepository {
-
-  @inject(TYPES.Database) private _database: MemoryData;
+  constructor(@inject(TYPES.Database) private _database: MemoryData) {}
 
   async create(cart: Cart): Promise<Cart> {
     const dtoCart = cart.unmarshal();
@@ -18,7 +18,7 @@ export class CartMemoryRepositoryImpl implements CartRepository {
 
   async getById(cartId: string): Promise<Cart> {
     const cart = await this._database.cart.getById<CartProps>(cartId);
-    if(!cart) {
+    if (!cart) {
       throw new Error("Cart not found");
     }
     return Cart.create(cart);
@@ -26,7 +26,10 @@ export class CartMemoryRepositoryImpl implements CartRepository {
 
   async update(cart: Cart): Promise<Cart> {
     const dtoCart = cart.unmarshal();
-    const updated = await this._database.cart.update<CartProps>(cart.id, dtoCart);
+    const updated = await this._database.cart.update<CartProps>(
+      cart.id,
+      dtoCart
+    );
     return Cart.create(updated);
   }
 }

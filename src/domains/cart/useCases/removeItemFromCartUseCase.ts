@@ -6,8 +6,10 @@ import { TYPES } from "../../../types";
 
 @injectable()
 export class RemoveItemFromCartUseCase {
-  @inject(TYPES.CartRepository) private cartRepository: CartRepository;
-  @inject(TYPES.ItemRepository) private itemRepository: ItemRepository;
+  constructor(
+    @inject(TYPES.CartRepository) private cartRepository: CartRepository,
+    @inject(TYPES.ItemRepository) private itemRepository: ItemRepository
+  ) {}
 
   private async _getCart(id: string): Promise<Cart> {
     try {

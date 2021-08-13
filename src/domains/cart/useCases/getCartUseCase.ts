@@ -5,7 +5,8 @@ import { TYPES } from "../../../types";
 
 @injectable()
 export class GetCartUseCase {
-    @inject(TYPES.CartRepository) private cartRepository: CartRepository;
+
+    constructor(@inject(TYPES.CartRepository) private cartRepository: CartRepository ) {}
 
     execute(cartId: string): Promise<Cart> {
       return this.cartRepository.getById(cartId);

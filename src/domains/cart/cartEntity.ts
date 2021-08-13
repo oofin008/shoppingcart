@@ -15,6 +15,7 @@ export class Cart {
     this._totalItems = this.calculateTotalItems(props.items);
   }
 
+  // need validation logic here
   public static create(props: CartProps): Cart {
     return new Cart(props);
   }

@@ -5,7 +5,9 @@ import { TYPES } from "../../../types";
 
 @injectable()
 export class GetItemByIdUseCase {
-    @inject(TYPES.ItemRepository) private itemRepository: ItemRepository;
+    constructor(
+      @inject(TYPES.ItemRepository) private itemRepository: ItemRepository
+    ) {}
 
     execute(id:string): Promise<Item> {
       return this.itemRepository.getById(id);

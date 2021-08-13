@@ -7,8 +7,10 @@ import { TYPES } from "../../../types";
 
 @injectable()
 export class AddItemToCartUseCase {
-  @inject(TYPES.CartRepository) private cartRepository: CartRepository;
+  constructor( @inject(TYPES.CartRepository) private cartRepository: CartRepository) {}
 
+  // bad code, shouldn't use error handling to create cart
+  // we don't know if it catch because no cart, or others error
   private async _getCart(id: string): Promise<Cart> {
     try {
       const cart = await this.cartRepository.getById(id);
