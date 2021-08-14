@@ -21,7 +21,7 @@ export class RemoveItemFromCartUseCase {
     }
   }
 
-  async execute(id:string, itemId: string): Promise<Cart> {
+  public async execute(id:string, itemId: string): Promise<Cart> {
     const cart = await this._getCart(id);
     const item = await this.itemRepository.getById(itemId);
     const itemToReturn = cart.items.find(i => i.id === itemId);

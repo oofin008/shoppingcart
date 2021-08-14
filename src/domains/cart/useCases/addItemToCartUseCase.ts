@@ -21,7 +21,7 @@ export class AddItemToCartUseCase {
     }
   }
 
-  async execute(id: CartId, item: ItemProps): Promise<Cart> {
+  public async execute(id: CartId, item: ItemProps): Promise<Cart> {
     const cart = await this._getCart(id);
     cart.addItem(item);
     return this.cartRepository.update(cart);

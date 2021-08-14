@@ -22,7 +22,7 @@ export class EditCartItemUseCase {
     }
   }
 
-  async execute(
+  public async execute(
     cartId: string,
     itemId: string,
     quantity: number

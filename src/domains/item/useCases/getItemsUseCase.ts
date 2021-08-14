@@ -5,9 +5,11 @@ import { TYPES } from "../../../types";
 
 @injectable()
 export class GetItemsUseCase {
-    constructor(@inject(TYPES.ItemRepository) private itemRepository: ItemRepository) {}
+  constructor(
+    @inject(TYPES.ItemRepository) private itemRepository: ItemRepository
+  ) {}
 
-    execute(): Promise<Item[]> {
-        return this.itemRepository.findAll();
-    }
+  public execute(): Promise<Item[]> {
+    return this.itemRepository.findAll();
+  }
 }

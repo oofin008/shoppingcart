@@ -9,7 +9,7 @@ export class AddItemToStockUseCase {
     @inject(TYPES.ItemRepository) private itemRepository: ItemRepository
   ) {}
 
-  execute(item: Item): Promise<Item> {
+  public execute(item: Item): Promise<Item> {
     return this.itemRepository.insert(item);
   }
 }

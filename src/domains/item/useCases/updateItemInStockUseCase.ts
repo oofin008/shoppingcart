@@ -5,9 +5,11 @@ import { TYPES } from "../../../types";
 
 @injectable()
 export class UpdateItemInStockUseCase {
-   constructor(@inject(TYPES.ItemRepository) private itemRepository: ItemRepository) {}
+  constructor(
+    @inject(TYPES.ItemRepository) private itemRepository: ItemRepository
+  ) {}
 
-    execute(item: Item): Promise<Item> {
-      return this.itemRepository.update(item);
-    }
+  public execute(item: Item): Promise<Item> {
+    return this.itemRepository.update(item);
+  }
 }
