@@ -1,18 +1,13 @@
-import cuid from "cuid";
 import { CartProps, CartId, TotalPrice, TotalItem } from "./cartInterface";
 import { ItemProps } from "../item/itemInterface";
 
 export class Cart {
   private _id: CartId;
   private _items: ItemProps[];
-  private _totalPrice: TotalPrice;
-  private _totalItems: TotalItem;
 
   private constructor(props: CartProps) {
-    this._id = props.id ? props.id : cuid();
+    this._id = props.id;
     this._items = props.items;
-    this._totalPrice = this.calculateTotalPrice(props.items);
-    this._totalItems = this.calculateTotalItems(props.items);
   }
 
   // need validation logic here
@@ -39,6 +34,11 @@ export class Cart {
     }
   }
 
+  public getItem(itemId: string): ItemProps | undefined {
+    return this._items.find((item) => item.id === itemId);
+  }
+
+
   public removeItem(itemId: string): void {
     const newItemsList = this._items.filter((item) => item.id !== itemId);
     this.updateCart(newItemsList);
@@ -63,39 +63,26 @@ export class Cart {
     };
   }
 
-  private calculateTotalPrice(products: ItemProps[]): TotalPrice {
+  public getTotalPrice(products: ItemProps[]): TotalPrice {
     return products.reduce((totalPrice, item) => {
       return totalPrice + item.price * item.quantity;
     }, 0);
   }
 
-  private calculateTotalItems(products: ItemProps[]): TotalItem {
+  public getTotalItems(products: ItemProps[]): TotalItem {
     return products.reduce((totalItem, item) => {
       return totalItem + item.quantity;
     }, 0);
   }
 
-  private updateTotalPriceAndTotalItems(): void {
-    this._totalPrice = this.calculateTotalPrice(this._items);
-    this._totalItems = this.calculateTotalItems(this._items);
-  }
-
   private updateCart(items: ItemProps[]): void {
     this._items = items;
-    this.updateTotalPriceAndTotalItems();
   }
-
 
   get id(): CartId {
     return this._id;
   }
   get items(): ItemProps[] {
     return this._items;
-  }
-  get totalPrice(): TotalPrice {
-    return this._totalPrice;
-  }
-  get totalItems(): TotalItem {
-    return this._totalItems;
   }
 }

@@ -3,6 +3,7 @@ import { Cart } from "../cartEntity";
 import { CartProps } from "../cartInterface";
 import { CartRepository } from "../cartRepository";
 import { MemoryData } from "../../../shared/data/memoryData";
+import { Either, DataError } from "../../../shared/domain";
 import { TYPES } from "../../../types";
 
 // this class should expose at infra layer
@@ -10,26 +11,38 @@ import { TYPES } from "../../../types";
 export class CartMemoryRepositoryImpl implements CartRepository {
   constructor(@inject(TYPES.Database) private _database: MemoryData) {}
 
-  async create(cart: Cart): Promise<Cart> {
-    const dtoCart = cart.unmarshal();
-    const inserted = await this._database.cart.insert<CartProps>(dtoCart);
-    return Cart.create(inserted);
-  }
-
-  async getById(cartId: string): Promise<Cart> {
-    const cart = await this._database.cart.getById<CartProps>(cartId);
-    if (!cart) {
-      throw new Error("Cart not found");
+  async create(cart: Cart): Promise<Either<DataError, Cart>> {
+    try {
+      const dtoCart = cart.unmarshal();
+      const inserted = await this._database.cart.insert<CartProps>(dtoCart);
+      return Either.right(Cart.create(inserted));
+    } catch (error) {
+      return Either.left({ kind: "UnexpectedError", error });
     }
-    return Cart.create(cart);
   }
 
-  async update(cart: Cart): Promise<Cart> {
-    const dtoCart = cart.unmarshal();
-    const updated = await this._database.cart.update<CartProps>(
-      cart.id,
-      dtoCart
-    );
-    return Cart.create(updated);
+  async getById(cartId: string): Promise<Either<DataError, Cart>> {
+    try {
+      const cart = await this._database.cart.getById<CartProps>(cartId);
+      if (!cart) {
+        throw new Error("Cart not found");
+      }
+      return Either.right(Cart.create(cart));
+    } catch (error) {
+      return Either.left({ kind: "UnexpectedError", error });
+    }
+  }
+
+  async update(cart: Cart): Promise<Either<DataError, Cart>> {
+    try {
+      const dtoCart = cart.unmarshal();
+      const updated = await this._database.cart.update<CartProps>(
+        cart.id,
+        dtoCart
+      );
+      return Either.right(Cart.create(updated));
+    } catch (error) {
+      return Either.left({ kind: "UnexpectedError", error });
+    }
   }
 }
