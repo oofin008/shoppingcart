@@ -20,8 +20,7 @@ export class EditCartItemUseCase {
 
     return cartResult.flatMap( async cart => {
       cart.editItem(itemId, quantity);
-      const updatedCart = await this.cartRepository.update(cart);
-      return updatedCart.map(() => cart);
+      return this.cartRepository.update(cart);
     }).run();
   }
 }

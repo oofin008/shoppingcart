@@ -1,6 +1,6 @@
 import { CartRepository } from "../cartRepository";
-import { ItemRepository } from "../../item";
 import { Cart } from "../cartEntity";
+import { Either, EitherAsync, DataError } from "../../../shared/domain";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../../types";
 
@@ -8,26 +8,14 @@ import { TYPES } from "../../../types";
 export class RemoveItemFromCartUseCase {
   constructor(
     @inject(TYPES.CartRepository) private cartRepository: CartRepository,
-    @inject(TYPES.ItemRepository) private itemRepository: ItemRepository
   ) {}
 
-  private async _getCart(id: string): Promise<Cart> {
-    try {
-      const cart = await this.cartRepository.getById(id);
-      return cart
-    } catch (error) {
-      const emptyCart = Cart.create({id, items: []});
-      return this.cartRepository.create(emptyCart);
-    }
-  }
+  public async execute(id:string, itemId: string): Promise<Either<DataError,Cart>> {
+    const cartResult = EitherAsync.fromPromise(this.cartRepository.getById(id));
 
-  public async execute(id:string, itemId: string): Promise<Cart> {
-    const cart = await this._getCart(id);
-    const item = await this.itemRepository.getById(itemId);
-    const itemToReturn = cart.items.find(i => i.id === itemId);
-    item.updateQuantity(item.quantity + itemToReturn.quantity);
-    cart.removeItem(itemId);
-    await this.itemRepository.update(item);
-    return this.cartRepository.update(cart);
+    return cartResult.flatMap( async cart => {
+      cart.removeItem(itemId)
+      return this.cartRepository.update(cart);
+    }).run();
   }
 }
