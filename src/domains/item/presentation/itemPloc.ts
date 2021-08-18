@@ -6,7 +6,7 @@ import { GetItemsUseCase } from "../useCases/getItemsUseCase";
 import { AddItemToStockUseCase } from "../useCases/addItemToStockUseCase";
 import { itemInitialState, ItemState } from "./itemState";
 
-export class ProductsPloc extends Ploc<ItemState> {
+export class ItemPloc extends Ploc<ItemState> {
   constructor(
     private getItemUseCase: GetItemsUseCase,
     private addItemToStockUseCase: AddItemToStockUseCase
