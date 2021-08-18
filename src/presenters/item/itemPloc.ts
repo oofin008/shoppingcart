@@ -1,9 +1,5 @@
-import { DataError } from "../../../shared/domain";
-import { Ploc } from "../../../shared/presentation";
-import { Item } from "../itemEntity";
-import { ItemProps } from "../itemInterface";
-import { GetItemsUseCase } from "../useCases/getItemsUseCase";
-import { AddItemToStockUseCase } from "../useCases/addItemToStockUseCase";
+import { Ploc, DataError } from "../../shared";
+import { Item, ItemProps, GetItemsUseCase, AddItemToStockUseCase } from "../../domains";
 import { itemInitialState, ItemState } from "./itemState";
 
 export class ItemPloc extends Ploc<ItemState> {
@@ -21,7 +17,7 @@ export class ItemPloc extends Ploc<ItemState> {
     ])
   }
 
-  async search(searchTerm: string) {
+  public async search(searchTerm: string) {
     const productResult = await this.getItemUseCase.execute();
 
     productResult.fold(
