@@ -63,14 +63,14 @@ export class Cart {
     };
   }
 
-  public getTotalPrice(products: ItemProps[]): TotalPrice {
-    return products.reduce((totalPrice, item) => {
+  public getTotalPrice(): TotalPrice {
+    return this._items.reduce((totalPrice, item) => {
       return totalPrice + item.price * item.quantity;
     }, 0);
   }
 
-  public getTotalItems(products: ItemProps[]): TotalItem {
-    return products.reduce((totalItem, item) => {
+  public getTotalItems(): TotalItem {
+    return this._items.reduce((totalItem, item) => {
       return totalItem + item.quantity;
     }, 0);
   }
