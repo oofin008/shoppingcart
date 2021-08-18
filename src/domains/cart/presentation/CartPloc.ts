@@ -1,5 +1,5 @@
-import { CartState, cartInitialState, CartItemState } from "./CartState";
-import { Ploc } from "../../../shared/presentation/Ploc";
+import { CartState, cartInitialState, CartItemState } from "./cartState";
+import { Ploc } from "../../../shared/presentation/ploc";
 import { GetCartUseCase } from "../useCases/getCartUseCase";
 import { AddItemToCartUseCase } from "../useCases/addItemToCartUseCase";
 import { RemoveItemFromCartUseCase } from "../useCases/RemoveItemFromCartUseCase";
