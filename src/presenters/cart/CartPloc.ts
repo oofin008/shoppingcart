@@ -20,7 +20,8 @@ export class CartPloc extends Ploc<CartState> {
   ) {
     super(cartInitialState);
 
-    this.createCart("A001", []);
+    // this.createCart("A001", []);
+    this.loadCart("A001");
   }
 
   public closeCart() {
@@ -61,8 +62,9 @@ export class CartPloc extends Ploc<CartState> {
   }
 
   public async addProductToCart(cartId: string, item: ItemProps) {
+    console.log('call add product');
     const result = await this.addItemToCartUseCase.execute(cartId, item);
-
+    
     result.fold(
       (error) => this.changeState(this.handleError(error)),
       (cart) => this.changeState(this.mapToUpdatedState(cart))
@@ -88,6 +90,7 @@ export class CartPloc extends Ploc<CartState> {
 
   private mapToUpdatedState(cart: Cart): CartState {
     const formatOptions = { style: "currency", currency: "EUR" };
+    console.log('update cart => ', cart.unmarshal());
 
     return {
       kind: "UpdatedCartState",

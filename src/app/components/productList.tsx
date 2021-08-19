@@ -1,82 +1,75 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-    Grid,
-    Card,
-    CardMedia,
-    CardContent,
-    Typography,
-    CardActions,
-    Button,
-} from "@material-ui/core";
-import { ItemProps } from "../../domains/item/itemInterface";
-import { useCartPloc } from "../App";
-
+import { CircularProgress, Grid, Container, Box, Typography } from "@material-ui/core";
+import ProductItem from "./productItem";
+import { dependenciesLocator } from "../../shared/dependency/dependencyLocator";
+import { usePlocState } from "../../shared/presentation/usePlocState";
 const useStyles = makeStyles(theme => ({
-    card: {
-        height: "100%",
+    titleContainer: {
+        marginBottom: theme.spacing(4),
+    },
+    cardGrid: {
+        paddingTop: theme.spacing(4),
+        paddingBottom: theme.spacing(4),
+    },
+    infoContainer: {
         display: "flex",
-        flexDirection: "column",
-    },
-    cardMedia: {
-        backgroundSize: "auto 100%",
-        paddingTop: "100%", // 16:9,
-        margin: theme.spacing(1),
-    },
-    cardContent: {
-        flexGrow: 1,
-    },
-    cardActions: {
+        alignItems: "center",
         justifyContent: "center",
-    },
-    productTitle: {
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-        height: 50,
-    },
-    productPrice: {
-        textAlign: "center",
+        height: "100vh",
     },
 }));
 
-interface ProductListProps {
-    product: ItemProps;
-}
-
-const ProductItem: React.FC<ProductListProps> = ({ product }) => {
+const ProductList: React.FC = () => {
+    const ploc = dependenciesLocator.provideItemPloc();
     const classes = useStyles();
-    const bloc = useCartPloc();
+    const state = usePlocState(ploc);
 
-    return (
-        <Grid item xs={6} sm={4} md={3} lg={2}>
-            <Card className={classes.card}>
-                {/* <CardMedia
-                    className={classes.cardMedia}
-                    image={product.image}
-                    title="Image title"
-                /> */}
-                <CardContent className={classes.cardContent}>
-                    <Typography className={classes.productTitle} gutterBottom variant="subtitle1">
-                        {product.title}
+    React.useEffect(() => {
+        const searchProducts = async (filter: string) => {
+            ploc.search(filter);
+        };
+
+        searchProducts("Element");
+    }, [ploc]);
+
+    switch (state.kind) {
+        case "LoadingProductsState": {
+            return (
+                <div className={classes.infoContainer}>
+                    <CircularProgress />
+                </div>
+            );
+        }
+        case "ErrorProductsState": {
+            return (
+                <div className={classes.infoContainer}>
+                    <Typography display="inline" variant="h5" component="h2">
+                        {state.error}
                     </Typography>
-                    <Typography variant="h6" className={classes.productPrice}>
-                        {product.price.toLocaleString("es-ES", {
-                            style: "currency",
-                            currency: "EUR",
-                        })}
-                    </Typography>
-                </CardContent>
-                <CardActions className={classes.cardActions}>
-                    <Button
-                        size="small"
-                        color="primary"
-                        onClick={() => bloc.addProductToCart('A001', product)}>
-                        Add to Cart
-                    </Button>
-                </CardActions>
-            </Card>
-        </Grid>
-    );
+                </div>
+            );
+        }
+        case "LoadedProductsState": {
+            return (
+                <Container className={classes.cardGrid} maxWidth="xl">
+                    <Box className={classes.titleContainer}>
+                        <Typography display="inline" variant="h6" component="h2">
+                            {"Results for "}
+                        </Typography>
+                        <Typography color="primary" display="inline" variant="h6" component="h2">
+                            {"Element"}
+                        </Typography>
+                    </Box>
+                    <Grid container spacing={2}>
+                        {state.products.map((product, index) => (
+                            <ProductItem product={product} key={index} />
+                        ))}
+                    </Grid>
+                </Container>
+            );
+        }
+    }
 };
 
-export default ProductItem;
+export default ProductList;
