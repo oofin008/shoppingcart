@@ -2,9 +2,9 @@ import React from "react";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { List, Divider, Box, Typography, CircularProgress } from "@material-ui/core";
 import CartContentItem from "./CartContentItem";
-import { CartItemState } from "@frontend-clean-architecture/core";
-import { useCartPloc } from "../app/App";
-import { usePlocState } from "../common/usePlocState";
+import { CartItemState } from "../../presenters";
+import { useCartPloc } from "../App";
+import { usePlocState } from "../../shared/presentation/usePlocState";
 
 const useStyles = makeStyles((theme: Theme) => ({
     totalPriceContainer: {

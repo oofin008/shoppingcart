@@ -4,10 +4,8 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import logo from "./logo.png";
-import reactLogo from "./react-logo.png";
-import { useCartPloc } from "../app/App";
-import { usePlocState } from "../common/usePlocState";
+import { useCartPloc } from "../App";
+import { usePlocState } from "../../shared/presentation/usePlocState";
 
 const useStyles = makeStyles(() => ({
     toolbar: {
@@ -26,10 +24,10 @@ const MyAppBar: React.FC = () => {
     return (
         <AppBar position="static">
             <Toolbar className={classes.toolbar}>
-                <div>
+                {/* <div>
                     <img src={logo} width={150} alt="logo" />
                     <img src={reactLogo} width={40} alt="react logo" />
-                </div>
+                </div> */}
 
                 <IconButton color="inherit">
                     <Badge badgeContent={totalItems} color="secondary">

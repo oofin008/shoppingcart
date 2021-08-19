@@ -9,8 +9,8 @@ import {
     CardActions,
     Button,
 } from "@material-ui/core";
-import { Product } from "@frontend-clean-architecture/core";
-import { useCartPloc } from "../app/App";
+import { ItemProps } from "../../domains/item/itemInterface";
+import { useCartPloc } from "../App";
 
 const useStyles = makeStyles(theme => ({
     card: {
@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 interface ProductListProps {
-    product: Product;
+    product: ItemProps;
 }
 
 const ProductItem: React.FC<ProductListProps> = ({ product }) => {
@@ -50,11 +50,11 @@ const ProductItem: React.FC<ProductListProps> = ({ product }) => {
     return (
         <Grid item xs={6} sm={4} md={3} lg={2}>
             <Card className={classes.card}>
-                <CardMedia
+                {/* <CardMedia
                     className={classes.cardMedia}
                     image={product.image}
                     title="Image title"
-                />
+                /> */}
                 <CardContent className={classes.cardContent}>
                     <Typography className={classes.productTitle} gutterBottom variant="subtitle1">
                         {product.title}
@@ -70,7 +70,7 @@ const ProductItem: React.FC<ProductListProps> = ({ product }) => {
                     <Button
                         size="small"
                         color="primary"
-                        onClick={() => bloc.addProductToCart(product)}>
+                        onClick={() => bloc.addProductToCart('A001', product)}>
                         Add to Cart
                     </Button>
                 </CardActions>

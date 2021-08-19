@@ -2,8 +2,8 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { CircularProgress, Grid, Container, Box, Typography } from "@material-ui/core";
 import ProductItem from "./productItem";
-import { dependenciesLocator } from "@frontend-clean-architecture/core";
-import { usePlocState } from "../common/usePlocState";
+import { dependenciesLocator } from "../../shared/dependency/dependencyLocator";
+import { usePlocState } from "../../shared/presentation/usePlocState";
 const useStyles = makeStyles(theme => ({
     titleContainer: {
         marginBottom: theme.spacing(4),

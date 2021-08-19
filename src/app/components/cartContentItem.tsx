@@ -11,8 +11,8 @@ import {
     Typography,
 } from "@material-ui/core";
 import RemoveIcon from "@material-ui/icons/Clear";
-import { useCartPloc } from "../app/App";
-import { CartItemState } from "@frontend-clean-architecture/core";
+import { useCartPloc } from "../App";
+import { CartItemState } from "../../presenters";
 
 const useStyles = makeStyles((theme: Theme) => ({
     itemContainer: {
@@ -47,12 +47,12 @@ const CartContentItem: React.FC<CartProps> = ({ key, cartItem }) => {
         <React.Fragment>
             <Paper className={classes.itemContainer}>
                 <ListItem key={key}>
-                    <img
+                    {/* <img
                         width={80}
                         className={classes.itemImage}
                         src={cartItem.image}
                         alt={cartItem.title}
-                    />
+                    /> */}
                     <ListItemText
                         primary={cartItem.title}
                         secondary={
@@ -68,7 +68,7 @@ const CartContentItem: React.FC<CartProps> = ({ key, cartItem }) => {
                                     margin="none"
                                     value={cartItem.quantity}
                                     onChange={event =>
-                                        bloc.editQuantityCartItem(cartItem, +event.target.value)
+                                        bloc.editQuantityCartItem('A001',cartItem, +event.target.value)
                                     }
                                 />
                                 <Typography variant="body1">{cartItem.price}</Typography>
@@ -77,7 +77,7 @@ const CartContentItem: React.FC<CartProps> = ({ key, cartItem }) => {
                     />
                     <ListItemSecondaryAction>
                         <IconButton edge="end" aria-label="delete">
-                            <RemoveIcon onClick={() => bloc.removeCartItem(cartItem)} />
+                            <RemoveIcon onClick={() => bloc.removeCartItem('A001', cartItem)} />
                         </IconButton>
                     </ListItemSecondaryAction>
                 </ListItem>

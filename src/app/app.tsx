@@ -2,9 +2,9 @@ import React from "react";
 import MyAppBar from "./components/appBar";
 import { CartPloc } from "../presenters";
 import { dependenciesLocator } from '../shared/dependency/dependencyLocator'
-import { createContext } from "../common/Context";
-import ProductList from "../products/ProductList";
-import CartDrawer from "../cart/CartDrawer";
+import { createContext } from "../shared/presentation/context";
+import ProductList from "./components/productList";
+import CartDrawer from "./components/cartDrawer";
 
 const [blocContext, usePloc] = createContext<CartPloc>();
 
@@ -14,8 +14,8 @@ const App: React.FC = () => {
     return (
         <blocContext.Provider value={dependenciesLocator.provideCartPloc()}>
             <MyAppBar />
-            <ProductList />
-            <CartDrawer />
+            {/* <ProductList /> */}
+            {/* <CartDrawer /> */}
         </blocContext.Provider>
     );
 };

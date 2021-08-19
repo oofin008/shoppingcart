@@ -4,8 +4,8 @@ import { Drawer, IconButton, Divider, Typography, Box } from "@material-ui/core"
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import CartContent from "./CartContent";
-import { useCartPloc } from "../app/App";
-import { usePlocState } from "../common/usePlocState";
+import { useCartPloc } from "../App";
+import { usePlocState } from "../../shared/presentation/usePlocState";
 
 const drawerWidth = 350;
 

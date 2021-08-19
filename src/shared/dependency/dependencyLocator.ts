@@ -1,9 +1,8 @@
 import { CartMemoryRepositoryImpl } from "../../domains/cart/data";
 import { AddItemToCartUseCase, EditCartItemUseCase, GetCartUseCase, RemoveItemFromCartUseCase, CreateCartUseCase } from "../../domains/cart/useCases";
-import { CartPloc } from "../../domains/cart/presentation/cartPloc";
+import { CartPloc, ItemPloc } from "../../presenters";
 import { ItemMemoryRepositoryImpl } from "../../domains/item/data";
 import { GetItemsUseCase, AddItemToStockUseCase } from "../../domains/item/useCases";
-import { ItemPloc } from "../../domains/item/presentation/itemPloc";
 import { MemoryData } from "../data/memoryData"
 
 const database = new MemoryData();
