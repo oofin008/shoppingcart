@@ -53,14 +53,6 @@ const ProductList: React.FC = () => {
         case "LoadedProductsState": {
             return (
                 <Container className={classes.cardGrid} maxWidth="xl">
-                    <Box className={classes.titleContainer}>
-                        <Typography display="inline" variant="h6" component="h2">
-                            {"Results for "}
-                        </Typography>
-                        <Typography color="primary" display="inline" variant="h6" component="h2">
-                            {"Element"}
-                        </Typography>
-                    </Box>
                     <Grid container spacing={2}>
                         {state.products.map((product, index) => (
                             <ProductItem product={product} key={index} />

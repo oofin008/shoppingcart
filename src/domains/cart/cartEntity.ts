@@ -21,7 +21,7 @@ export class Cart {
     if (existedIndex > -1) {
       const addedItem: ItemProps = {
         ...this._items[existedIndex],
-        quantity: this._items[existedIndex].quantity + item.quantity,
+        quantity: this._items[existedIndex].quantity + 1,
       };
       const newItemsList: ItemProps[] = [
         ...this._items.slice(0, existedIndex),
@@ -30,7 +30,7 @@ export class Cart {
       ];
       this.updateCart(newItemsList);
     } else {
-      this.updateCart([...this._items, item]);
+      this.updateCart([...this._items, {...item, quantity: 1}]);
     }
   }
 

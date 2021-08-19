@@ -61,7 +61,7 @@ export class CartPloc extends Ploc<CartState> {
     );
   }
 
-  public async addProductToCart(cartId: string, item: ItemProps) {
+  public async addItemToCart(cartId: string, item: ItemProps) {
     console.log('call add product');
     const result = await this.addItemToCartUseCase.execute(cartId, item);
     

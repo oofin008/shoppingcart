@@ -1,11 +1,11 @@
-import { red, blue, grey } from "@material-ui/core/colors";
+import { red, grey, deepOrange, orange } from "@material-ui/core/colors";
 import { createTheme } from "@material-ui/core/styles";
 
 // A custom theme for this app
 const theme = createTheme({
     palette: {
         primary: {
-            main: blue.A400,
+            main: deepOrange.A200,
         },
         secondary: {
             main: red.A700,

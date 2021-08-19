@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
   Grid,
   Card,
-  CardMedia,
   CardContent,
   Typography,
   CardActions,
@@ -20,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   },
   cardMedia: {
     backgroundSize: "auto 100%",
-    paddingTop: "100%", // 16:9,
+    paddingTop: "100%",
     margin: theme.spacing(1),
   },
   cardContent: {
@@ -50,11 +49,6 @@ const ProductItem: React.FC<ProductListProps> = ({product}) => {
   return (
     <Grid item xs={6} sm={4} md={3} lg={2}>
       <Card className={classes.card}>
-        {/* <CardMedia
-                    className={classes.cardMedia}
-                    image={product.image}
-                    title="Image title"
-                /> */}
         <CardContent className={classes.cardContent}>
           <Typography className={classes.productTitle} gutterBottom variant="subtitle1">
             {product.title}
@@ -62,7 +56,7 @@ const ProductItem: React.FC<ProductListProps> = ({product}) => {
           <Typography variant="h6" className={classes.productPrice}>
             {product.price.toLocaleString("es-ES", {
               style: "currency",
-              currency: "EUR",
+              currency: "THB",
             })}
           </Typography>
         </CardContent>
@@ -70,7 +64,7 @@ const ProductItem: React.FC<ProductListProps> = ({product}) => {
           <Button
             size="small"
             color="primary"
-            onClick={() => bloc.addProductToCart('A001', product)}>
+            onClick={() => bloc.addItemToCart('A001', product)}>
             Add to Cart
           </Button>
         </CardActions>

@@ -42,6 +42,7 @@ const CartDrawer: React.FC = () => {
         <Drawer
             anchor="right"
             open={state.open}
+            onClose={() => ploc.closeCart()}
             className={classes.drawer}
             classes={{
                 paper: classes.drawerPaper,

@@ -47,12 +47,6 @@ const CartContentItem: React.FC<CartProps> = ({ key, cartItem }) => {
         <React.Fragment>
             <Paper className={classes.itemContainer}>
                 <ListItem key={key}>
-                    {/* <img
-                        width={80}
-                        className={classes.itemImage}
-                        src={cartItem.image}
-                        alt={cartItem.title}
-                    /> */}
                     <ListItemText
                         primary={cartItem.title}
                         secondary={

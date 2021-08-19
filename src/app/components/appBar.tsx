@@ -24,11 +24,7 @@ const MyAppBar: React.FC = () => {
     return (
         <AppBar position="static">
             <Toolbar className={classes.toolbar}>
-                {/* <div>
-                    <img src={logo} width={150} alt="logo" />
-                    <img src={reactLogo} width={40} alt="react logo" />
-                </div> */}
-
+                <div></div>
                 <IconButton color="inherit">
                     <Badge badgeContent={totalItems} color="secondary">
                         <ShoppingCartIcon onClick={() => ploc.openCart()} />
