@@ -6,10 +6,9 @@ import { Either, EitherAsync, DataError } from "../../../shared/domain";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../../types";
 
-@injectable()
 export class AddItemToCartUseCase {
   constructor(
-    @inject(TYPES.CartRepository) private cartRepository: CartRepository
+    private cartRepository: CartRepository
   ) {}
 
   public async execute(

@@ -7,9 +7,8 @@ import { Either, DataError } from "../../../shared/domain";
 import { TYPES } from "../../../types";
 
 // this class should expose at infra layer
-@injectable()
 export class CartMemoryRepositoryImpl implements CartRepository {
-  constructor(@inject(TYPES.Database) private _database: MemoryData) {}
+  constructor(private _database: MemoryData) {}
 
   async create(cart: Cart): Promise<Either<DataError, Cart>> {
     try {

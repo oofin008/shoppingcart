@@ -14,8 +14,8 @@ const App: React.FC = () => {
     return (
         <blocContext.Provider value={dependenciesLocator.provideCartPloc()}>
             <MyAppBar />
-            {/* <ProductList /> */}
-            {/* <CartDrawer /> */}
+            <ProductList />
+            <CartDrawer />
         </blocContext.Provider>
     );
 };

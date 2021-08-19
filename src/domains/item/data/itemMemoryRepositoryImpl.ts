@@ -6,11 +6,10 @@ import { inject, injectable } from "inversify";
 import { Either, DataError } from "../../../shared/domain";
 import { TYPES } from "../../../types";
 
-@injectable()
 export class ItemMemoryRepositoryImpl implements ItemRepository {
-  constructor(@inject(TYPES.Database) private _database: MemoryData) {}
+  constructor(private _database: MemoryData) {}
 
-  public async findAll(): Promise<Either<DataError,Item[]>> {
+  public async findAll(): Promise<Either<DataError, Item[]>> {
     try {
       const items = await (<Promise<ItemProps[]>>(
         this._database.items.findAll()
@@ -21,7 +20,7 @@ export class ItemMemoryRepositoryImpl implements ItemRepository {
     }
   }
 
-  public async getById(id: string): Promise<Either<DataError,Item>> {
+  public async getById(id: string): Promise<Either<DataError, Item>> {
     try {
       const item = await this._database.items.getById<ItemProps>(id);
       if (!item) {
@@ -33,7 +32,7 @@ export class ItemMemoryRepositoryImpl implements ItemRepository {
     }
   }
 
-  public async insert(item: Item): Promise<Either<DataError,Item>> {
+  public async insert(item: Item): Promise<Either<DataError, Item>> {
     try {
       const dtoItem = item.unmarshal();
       const isExist = await this._database.items.getById<ItemProps>(item.id);
@@ -47,7 +46,7 @@ export class ItemMemoryRepositoryImpl implements ItemRepository {
     }
   }
 
-  public async update(item: Item): Promise<Either<DataError,Item>> {
+  public async update(item: Item): Promise<Either<DataError, Item>> {
     try {
       const dtoItem = item.unmarshal();
       const updated = await this._database.items.update<ItemProps>(
