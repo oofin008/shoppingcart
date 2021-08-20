@@ -65,7 +65,7 @@ export class Cart {
 
   public getTotalPrice(): TotalPrice {
     return this._items.reduce((totalPrice, item) => {
-      return totalPrice + item.price * item.quantity;
+      return totalPrice + (item.price * item.quantity);
     }, 0);
   }
 
