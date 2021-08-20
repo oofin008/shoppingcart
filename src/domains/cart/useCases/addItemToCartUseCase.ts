@@ -18,6 +18,7 @@ export class AddItemToCartUseCase {
     const cartResult = EitherAsync.fromPromise(this.cartRepository.getById(id));
     return cartResult
       .flatMap<Cart>((cart) => {
+        console.log('addItemtoCartUseCase database=>', cart);
         cart.addItem(item);
         return this.cartRepository.update(cart);
       })

@@ -4,6 +4,7 @@ import { CircularProgress, Grid, Container, Box, Typography } from "@material-ui
 import ProductItem from "./productItem";
 import { dependenciesLocator } from "../../shared/dependency/dependencyLocator";
 import { usePlocState } from "../../shared/presentation/usePlocState";
+
 const useStyles = makeStyles(theme => ({
     titleContainer: {
         marginBottom: theme.spacing(4),
@@ -20,10 +21,11 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+const ploc = dependenciesLocator.provideItemPloc();
+
 const ProductList: React.FC = () => {
-    const ploc = dependenciesLocator.provideItemPloc();
-    const classes = useStyles();
-    const state = usePlocState(ploc);
+  const classes = useStyles();
+  const state = usePlocState(ploc);
 
     React.useEffect(() => {
         const searchProducts = async (filter: string) => {

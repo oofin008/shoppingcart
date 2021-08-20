@@ -10,10 +10,10 @@ export class ItemPloc extends Ploc<ItemState> {
     super(itemInitialState);
 
     this.addToStock([
-      { id: '1', title: 'Product 1', price: 10, quantity: 10 },
-      { id: '2', title: 'Product 2', price: 20, quantity: 20 },
-      { id: '3', title: 'Product 3', price: 30, quantity: 30 },
-      { id: '4', title: 'Product 4', price: 40, quantity: 40 },
+      { id: '0001', title: 'product1', price: 10, quantity: 1 },
+      { id: '0002', title: 'product2', price: 20, quantity: 2 },
+      { id: '0003', title: 'product3', price: 30, quantity: 3 },
+      { id: '0004', title: 'product4', price: 40, quantity: 4 },
     ])
   }
 
