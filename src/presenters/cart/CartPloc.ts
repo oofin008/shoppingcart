@@ -37,6 +37,7 @@ export class CartPloc extends Ploc<CartState> {
       cartId,
       item.id
     );
+    console.log('removeCartItem');
 
     result.fold(
       (error) => this.changeState(this.handleError(error)),
@@ -62,8 +63,8 @@ export class CartPloc extends Ploc<CartState> {
   }
 
   public async addItemToCart(cartId: string, item: ItemProps) {
-    console.log('call add product');
     const result = await this.addItemToCartUseCase.execute(cartId, item);
+    console.log('addItemToCart');
     
     result.fold(
       (error) => this.changeState(this.handleError(error)),
@@ -73,7 +74,7 @@ export class CartPloc extends Ploc<CartState> {
 
   private async loadCart(cartId: string) {
     const result = await this.getCartUseCase.execute(cartId);
-
+    console.log('loadCart');
     result.fold(
       (error) => this.changeState(this.handleError(error)),
       (cart) => this.changeState(this.mapToUpdatedState(cart))
@@ -89,8 +90,8 @@ export class CartPloc extends Ploc<CartState> {
   }
 
   private mapToUpdatedState(cart: Cart): CartState {
-    const formatOptions = { style: "currency", currency: "EUR" };
-    console.log('update cart => ', cart.unmarshal());
+    const formatOptions = { style: "currency", currency: "THB" };
+    console.log('mapToUpdatedState = ', cart.unmarshal());
 
     return {
       kind: "UpdatedCartState",
@@ -98,6 +99,7 @@ export class CartPloc extends Ploc<CartState> {
       totalItems: cart.getTotalItems(),
       totalPrice: cart.getTotalPrice().toLocaleString("es-ES", formatOptions),
       items: cart.items.map((cartItem) => {
+        console.log(cartItem);
         return {
           id: cartItem.id,
           title: cartItem.title,

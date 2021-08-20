@@ -25,7 +25,11 @@ export class CartMemoryRepositoryImpl implements CartRepository {
       const cart = await this._database.cart.getById<CartProps>(cartId);
       if (!cart) {
         // throw new Error("Cart not found");
-        const newCart = await this._database.cart.insert<CartProps>({id: cartId, items: []});
+        console.log('create new cart');
+        const newCart = await this._database.cart.insert<CartProps>({id: cartId, items: [
+          { id: '0001', title: 'product1', price: 10, quantity: 1 },
+          { id: '0002', title: 'product2', price: 20, quantity: 2 },
+        ]});
         return Either.right(Cart.create(newCart));
       }
       return Either.right(Cart.create(cart));

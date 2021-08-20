@@ -13,13 +13,14 @@ import {
   AddItemToStockUseCase,
 } from "../../domains/item/useCases";
 import { MemoryData } from "../data/memoryData";
+import { inject } from "inversify";
+import { TYPES } from "../../types";
 
-function databaseProvider(): MemoryData {
-  return new MemoryData();
-}
+const database = new MemoryData();
 
 function provideItemPloc(): ItemPloc {
-  const itemRepository = new ItemMemoryRepositoryImpl(databaseProvider());
+  console.log('create provideItemPloc');
+  const itemRepository = new ItemMemoryRepositoryImpl(database);
   const getItemUseCase = new GetItemsUseCase(itemRepository);
   const addItemToStockUseCase = new AddItemToStockUseCase(itemRepository);
   const itemPloc = new ItemPloc(getItemUseCase, addItemToStockUseCase);
@@ -28,7 +29,8 @@ function provideItemPloc(): ItemPloc {
 }
 
 function provideCartPloc(): CartPloc {
-  const cartRepository = new CartMemoryRepositoryImpl(databaseProvider());
+  console.log('create provideCartPloc');
+  const cartRepository = new CartMemoryRepositoryImpl(database);
   const getCartUseCase = new GetCartUseCase(cartRepository);
   const addItemToCartUseCase = new AddItemToCartUseCase(cartRepository);
   const removeItemFromCartUseCase = new RemoveItemFromCartUseCase(
