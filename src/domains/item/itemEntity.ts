@@ -1,10 +1,10 @@
 import { ItemProps, ItemId } from './itemInterface';
 
 export class Item{
-  protected id: ItemId;
-  protected title: string;
-  protected price: number;
-  protected quantity: number;
+  public id: ItemId;
+  public title: string;
+  public price: number;
+  public quantity: number;
 
 
   private constructor(props: ItemProps) {

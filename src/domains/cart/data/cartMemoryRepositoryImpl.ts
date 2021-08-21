@@ -11,44 +11,59 @@ export class CartMemoryRepositoryImpl implements CartRepository {
   constructor(private _database: MemoryData) {}
 
   async create(cart: Cart): Promise<Either<DataError, Cart>> {
-    try {
-      const dtoCart = cart.unmarshal();
-      const inserted = await this._database.cart.insert<CartProps>(dtoCart);
-      return Either.right(Cart.create(inserted));
-    } catch (error) {
-      return Either.left({ kind: "UnexpectedError", error });
-    }
+    return new Promise((resolve, _reject) => {
+      setTimeout(async () => {
+        try {
+          const dtoCart = cart.unmarshal();
+          const inserted = await this._database.cart.insert<CartProps>(dtoCart);
+          resolve(Either.right(Cart.create(inserted)));
+        } catch (error) {
+          resolve(Either.left({ kind: "UnexpectedError", error }));
+        }
+      }, 100);
+    });
   }
 
   async getById(cartId: string): Promise<Either<DataError, Cart>> {
-    try {
-      const cart = await this._database.cart.getById<CartProps>(cartId);
-      if (!cart) {
-        // throw new Error("Cart not found");
-        console.log('create new cart');
-        const newCart = await this._database.cart.insert<CartProps>({id: cartId, items: [
-          { id: '0001', title: 'product1', price: 10, quantity: 1 },
-          { id: '0002', title: 'product2', price: 20, quantity: 2 },
-        ]});
-        return Either.right(Cart.create(newCart));
-      }
-      return Either.right(Cart.create(cart));
-      // return Either.right(this.cart);
-    } catch (error) {
-      return Either.left({ kind: "UnexpectedError", error });
-    }
+    return new Promise((resolve, _reject) => {
+      setTimeout(async () => {
+        try {
+          const cart = await this._database.cart.getById<CartProps>(cartId);
+          if (!cart) {
+            // throw new Error("Cart not found");
+            console.log("create new cart");
+            const newCart = await this._database.cart.insert<CartProps>({
+              id: cartId,
+              items: [
+                { id: "0001", title: "product1", price: 10, quantity: 1 },
+                { id: "0002", title: "product2", price: 20, quantity: 2 },
+              ],
+            });
+            resolve(Either.right(Cart.create(newCart)));
+          }
+          resolve(Either.right(Cart.create(cart)));
+          // return Either.right(this.cart);
+        } catch (error) {
+          resolve(Either.left({ kind: "UnexpectedError", error }));
+        }
+      }, 100);
+    });
   }
 
   async update(cart: Cart): Promise<Either<DataError, Cart>> {
-    try {
-      const dtoCart = cart.unmarshal();
-      const updated = await this._database.cart.update<CartProps>(
-        cart.id,
-        dtoCart
-      );
-      return Either.right(Cart.create(updated));
-    } catch (error) {
-      return Either.left({ kind: "UnexpectedError", error });
-    }
+    return new Promise((resolve, _reject) => {
+      setTimeout(async () => {
+        try {
+          const dtoCart = cart.unmarshal();
+          const updated = await this._database.cart.update<CartProps>(
+            cart.id,
+            dtoCart
+          );
+          resolve(Either.right(Cart.create(updated)));
+        } catch (error) {
+          resolve(Either.left({ kind: "UnexpectedError", error }));
+        }
+      }, 100);
+    });
   }
 }

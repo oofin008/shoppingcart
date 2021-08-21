@@ -91,7 +91,6 @@ export class CartPloc extends Ploc<CartState> {
 
   private mapToUpdatedState(cart: Cart): CartState {
     const formatOptions = { style: "currency", currency: "THB" };
-    console.log('mapToUpdatedState = ', cart.unmarshal());
 
     return {
       kind: "UpdatedCartState",
@@ -99,7 +98,6 @@ export class CartPloc extends Ploc<CartState> {
       totalItems: cart.getTotalItems(),
       totalPrice: cart.getTotalPrice().toLocaleString("es-ES", formatOptions),
       items: cart.items.map((cartItem) => {
-        console.log(cartItem);
         return {
           id: cartItem.id,
           title: cartItem.title,
