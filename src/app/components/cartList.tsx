@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { List, Box, Typography, CircularProgress, Container, Grid } from "@material-ui/core";
-import CartContentItem from "./CartContentItem";
+import CartContentItem from "./cartItem";
 import { CartItemState } from "../../presenters";
 import { useCartPloc } from "../App";
 import { usePlocState } from "../../shared/presentation/usePlocState";

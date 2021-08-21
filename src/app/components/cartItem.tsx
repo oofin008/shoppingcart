@@ -5,6 +5,8 @@ import {
   CardContent,
   Grid,
   Card,
+  CardActions,
+  Button,
 } from "@material-ui/core";
 import RemoveIcon from "@material-ui/icons/Clear";
 import { useCartPloc } from "../App";
@@ -18,6 +20,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   cardContent: {
     flexGrow: 1,
+  },
+  cardActions: {
+    justifyContent: "center",
   },
   productTitle: {
     overflow: "hidden",
@@ -66,6 +71,14 @@ const CartContentItem: React.FC<CartProps> = ({ key, cartItem }) => {
             {cartItem.price}
           </Typography>
         </CardContent>
+        <CardActions className={classes.cardActions}>
+          <Button
+            size="small"
+            color="primary"
+            onClick={() => bloc.removeCartItem('A001', cartItem)}>
+            Remove from Cart
+          </Button>
+        </CardActions>
       </Card>
     </Grid>
 
