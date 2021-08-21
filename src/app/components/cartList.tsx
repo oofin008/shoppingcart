@@ -38,17 +38,15 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const CartContent: React.FC = () => {
+const CartList: React.FC = () => {
   const classes = useStyles();
   const ploc = useCartPloc();
   const state = usePlocState(ploc);
 
   const cartItems = (items: CartItemState[]) => (
-    <List className={classes.itemsList}>
-      {items.map((item, index) => (
+      items.map((item, index) => (
         <CartContentItem key={index} cartItem={item} />
-      ))}
-    </List>
+      ))
   );
 
   const emptyCartItems = () => (
@@ -81,7 +79,7 @@ const CartContent: React.FC = () => {
     case "UpdatedCartState": {
       return (
         <Container className={classes.cardGrid} maxWidth="xl">
-          <Box className={classes.totalPriceContainer}>
+          <Box className={classes.titleContainer}>
             <Typography display="inline" variant="h5" component="h2">
               {"Shopping Cart"}
             </Typography>
@@ -90,23 +88,9 @@ const CartContent: React.FC = () => {
             {state.items.length > 0 ? cartItems(state.items) : emptyCartItems()}
           </Grid>
         </Container>
-        // <React.Fragment>
-        //     <Box flexDirection="column" className={classes.itemsContainer}>
-        //         {state.items.length > 0 ? cartItems(state.items) : emptyCartItems()}
-        //     </Box>
-        //     <Divider />
-        //     <Box flexDirection="row" className={classes.totalPriceContainer}>
-        //         <Typography variant="h6" component="h2">
-        //             Total Price
-        //         </Typography>
-        //         <Typography variant="h6" component="h2">
-        //             {state.totalPrice}
-        //         </Typography>
-        //     </Box>
-        // </React.Fragment>
       );
     }
   }
 };
 
-export default CartContent;
+export default CartList;

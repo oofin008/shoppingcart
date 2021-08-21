@@ -36,7 +36,7 @@ export class ItemMemoryRepositoryImpl implements ItemRepository {
         } catch (error) {
           resolve(Either.left({ kind: "UnexpectedError", error }));
         }
-      }, 100);
+      }, 0);
     });
   }
 
@@ -56,7 +56,7 @@ export class ItemMemoryRepositoryImpl implements ItemRepository {
         } catch (error) {
           resolve(Either.left({ kind: "UnexpectedError", error }));
         }
-      }, 100);
+      }, 0);
     });
   }
 
@@ -73,7 +73,7 @@ export class ItemMemoryRepositoryImpl implements ItemRepository {
         } catch (error) {
           resolve(Either.left({ kind: "UnexpectedError", error }));
         }
-      }, 100);
+      }, 0);
     });
   }
 }
