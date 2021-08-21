@@ -4,11 +4,8 @@ import { inject, injectable } from "inversify";
 import { TYPES } from "../../../types";
 import { DataError, Either } from "../../../shared/domain";
 
-@injectable()
 export class AddItemToStockUseCase {
-  constructor(
-    @inject(TYPES.ItemRepository) private itemRepository: ItemRepository
-  ) {}
+  constructor(private itemRepository: ItemRepository) {}
 
   public execute(item: Item): Promise<Either<DataError, Item>> {
     return this.itemRepository.insert(item);

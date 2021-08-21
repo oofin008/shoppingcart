@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "ESnext",
+    "target": "es5",
     "moduleResolution": "node",
-    "target": "es6",
+    "lib": ["DOM", "ESNEXT"],
+    "jsx": "react-jsx",
     "esModuleInterop": true,
     "types": ["reflect-metadata","mocha"],
     "emitDecoratorMetadata": true,
@@ -10,6 +12,9 @@
     "outDir": "./dist",
     "rootDir": "./"
   },
+  "include": [
+    "src/**/*",
+  ],
   "exclude": [
     "node_modules",
     "dist"

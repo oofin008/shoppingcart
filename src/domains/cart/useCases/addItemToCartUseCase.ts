@@ -6,10 +6,9 @@ import { Either, EitherAsync, DataError } from "../../../shared/domain";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../../types";
 
-@injectable()
 export class AddItemToCartUseCase {
   constructor(
-    @inject(TYPES.CartRepository) private cartRepository: CartRepository
+    private cartRepository: CartRepository
   ) {}
 
   public async execute(
@@ -19,6 +18,7 @@ export class AddItemToCartUseCase {
     const cartResult = EitherAsync.fromPromise(this.cartRepository.getById(id));
     return cartResult
       .flatMap<Cart>((cart) => {
+        console.log('addItemtoCartUseCase database=>', cart);
         cart.addItem(item);
         return this.cartRepository.update(cart);
       })

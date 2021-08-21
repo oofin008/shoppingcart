@@ -1,7 +1,3 @@
-export interface CommonCartState {
-  open: boolean;
-}
-
 export interface LoadingCartState {
   kind: "LoadingCartState";
 }
@@ -18,7 +14,7 @@ export interface ErrorCartState {
   error: string;
 }
 
-export type CartState = (LoadingCartState | UpdatedCartState | ErrorCartState) & CommonCartState;
+export type CartState = (LoadingCartState | UpdatedCartState | ErrorCartState);
 
 export interface CartItemState {
   id: string;
@@ -29,5 +25,4 @@ export interface CartItemState {
 
 export const cartInitialState: CartState = {
   kind: "LoadingCartState",
-  open: false,
 };
