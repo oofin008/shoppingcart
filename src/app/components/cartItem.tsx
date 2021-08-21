@@ -7,8 +7,8 @@ import {
   Card,
   CardActions,
   Button,
+  TextField,
 } from "@material-ui/core";
-import RemoveIcon from "@material-ui/icons/Clear";
 import { useCartPloc } from "../App";
 import { CartItemState } from "../../presenters";
 
@@ -70,6 +70,21 @@ const CartContentItem: React.FC<CartProps> = ({ key, cartItem }) => {
           <Typography variant="h6" className={classes.productPrice}>
             {cartItem.price}
           </Typography>
+          <TextField
+            id="standard-number"
+            label="Quantity"
+            type="number"
+            className={classes.quantityField}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            margin="none"
+            value={cartItem.quantity}
+            onChange={event => {
+              bloc.editQuantityCartItem('A001', cartItem, +event.target.value)
+            }
+            }
+          />
         </CardContent>
         <CardActions className={classes.cardActions}>
           <Button
@@ -81,41 +96,7 @@ const CartContentItem: React.FC<CartProps> = ({ key, cartItem }) => {
         </CardActions>
       </Card>
     </Grid>
-
-        // <React.Fragment>
-        //     <Paper className={classes.itemContainer}>
-        //         <ListItem key={key}>
-        //             <ListItemText
-        //                 primary={cartItem.title}
-        //                 secondary={
-        //                     <Box flexDirection="row" className={classes.secondContainer}>
-        //                         <TextField
-        //                             id="standard-number"
-        //                             label="Quantity"
-        //                             type="number"
-        //                             className={classes.quantityField}
-        //                             InputLabelProps={{
-        //                                 shrink: true,
-        //                             }}
-        //                             margin="none"
-        //                             value={cartItem.quantity}
-        //                             onChange={event =>
-        //                                 bloc.editQuantityCartItem('A001',cartItem, +event.target.value)
-        //                             }
-        //                         />
-        //                         <Typography variant="body1">{cartItem.price}</Typography>
-        //                     </Box>
-        //                 }
-        //             />
-        //             <ListItemSecondaryAction>
-        //                 <IconButton edge="end" aria-label="delete">
-        //                     <RemoveIcon onClick={() => bloc.removeCartItem('A001', cartItem)} />
-        //                 </IconButton>
-        //             </ListItemSecondaryAction>
-        //         </ListItem>
-        //     </Paper>
-        // </React.Fragment>
-    );
+  );
 };
 
 export default CartContentItem;
