@@ -1,4 +1,4 @@
-import React, { Key } from "react";
+import React from "react";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import {
   Typography,
@@ -39,11 +39,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface CartProps {
-  key: Key;
   cartItem: CartItemState;
 }
 
-const CartContentItem: React.FC<CartProps> = ({ key, cartItem }) => {
+const CartContentItem: React.FC<CartProps> = ({ cartItem }) => {
   const classes = useStyles();
   const bloc = useCartPloc();
 

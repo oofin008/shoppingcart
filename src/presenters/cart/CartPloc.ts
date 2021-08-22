@@ -94,12 +94,12 @@ export class CartPloc extends Ploc<CartState> {
     return {
       kind: "UpdatedCartState",
       totalItems: cart.getTotalItems(),
-      totalPrice: cart.getTotalPrice().toLocaleString("es-ES", formatOptions),
+      totalPrice: cart.getTotalPrice().toLocaleString("th-TH", formatOptions),
       items: cart.items.map((cartItem) => {
         return {
           id: cartItem.id,
           title: cartItem.title,
-          price: cartItem.price.toLocaleString("es-ES", formatOptions),
+          price: cartItem.price.toLocaleString("th-TH", formatOptions),
           quantity: cartItem.quantity,
         };
       }),

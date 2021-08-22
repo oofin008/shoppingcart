@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   titleContainer: {
     marginBottom: theme.spacing(4),
   },
+  footerContainer: {
+    marginTop: theme.spacing(4),
+  },
   cardGrid: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
@@ -87,6 +90,11 @@ const CartList: React.FC = () => {
           <Grid container spacing={2}>
             {state.items.length > 0 ? cartItems(state.items) : emptyCartItems()}
           </Grid>
+          <Box className={classes.footerContainer}>
+            <Typography display="inline" variant="h5" component="h2">
+              {"Total Price: " + state.totalPrice}
+            </Typography>
+          </Box>
         </Container>
       );
     }

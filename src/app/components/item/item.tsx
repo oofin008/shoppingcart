@@ -54,7 +54,7 @@ const Item: React.FC<itemListProps> = ({item: product}) => {
             {product.title}
           </Typography>
           <Typography variant="h6" className={classes.productPrice}>
-            {product.price.toLocaleString("es-ES", {
+            {product.price.toLocaleString("th-TH", {
               style: "currency",
               currency: "THB",
             })}
