@@ -1,12 +1,9 @@
-import { injectable, inject } from "inversify";
 import { Cart } from "../cartEntity";
 import { CartProps } from "../cartInterface";
 import { CartRepository } from "../cartRepository";
 import { MemoryData } from "../../../shared/data/memoryData";
 import { Either, DataError } from "../../../shared/domain";
-import { TYPES } from "../../../types";
 
-// this class should expose at infra layer
 export class CartMemoryRepositoryImpl implements CartRepository {
   constructor(private _database: MemoryData) {}
 
@@ -30,8 +27,6 @@ export class CartMemoryRepositoryImpl implements CartRepository {
         try {
           const cart = await this._database.cart.getById<CartProps>(cartId);
           if (!cart) {
-            // throw new Error("Cart not found");
-            console.log("create new cart");
             const newCart = await this._database.cart.insert<CartProps>({
               id: cartId,
               items: [
@@ -42,7 +37,6 @@ export class CartMemoryRepositoryImpl implements CartRepository {
             resolve(Either.right(Cart.create(newCart)));
           }
           resolve(Either.right(Cart.create(cart)));
-          // return Either.right(this.cart);
         } catch (error) {
           resolve(Either.left({ kind: "UnexpectedError", error }));
         }

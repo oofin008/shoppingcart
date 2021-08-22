@@ -2,9 +2,7 @@ import { Item } from "../itemEntity";
 import { ItemProps } from "../itemInterface";
 import { ItemRepository } from "../itemRepository";
 import { MemoryData } from "../../../shared/data/memoryData";
-import { inject, injectable } from "inversify";
 import { Either, DataError } from "../../../shared/domain";
-import { TYPES } from "../../../types";
 
 export class ItemMemoryRepositoryImpl implements ItemRepository {
   constructor(private _database: MemoryData) {}

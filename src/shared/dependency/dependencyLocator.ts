@@ -13,13 +13,10 @@ import {
   AddItemToStockUseCase,
 } from "../../domains/item/useCases";
 import { MemoryData } from "../data/memoryData";
-import { inject } from "inversify";
-import { TYPES } from "../../types";
 
 const database = new MemoryData();
 
 function provideItemPloc(): ItemPloc {
-  console.log('create provideItemPloc');
   const itemRepository = new ItemMemoryRepositoryImpl(database);
   const getItemUseCase = new GetItemsUseCase(itemRepository);
   const addItemToStockUseCase = new AddItemToStockUseCase(itemRepository);
@@ -29,13 +26,10 @@ function provideItemPloc(): ItemPloc {
 }
 
 function provideCartPloc(): CartPloc {
-  console.log('create provideCartPloc');
   const cartRepository = new CartMemoryRepositoryImpl(database);
   const getCartUseCase = new GetCartUseCase(cartRepository);
   const addItemToCartUseCase = new AddItemToCartUseCase(cartRepository);
-  const removeItemFromCartUseCase = new RemoveItemFromCartUseCase(
-    cartRepository
-  );
+  const removeItemFromCartUseCase = new RemoveItemFromCartUseCase(cartRepository);
   const editCartItemUseCase = new EditCartItemUseCase(cartRepository);
   const createCartUseCase = new CreateCartUseCase(cartRepository);
   const cartPloc = new CartPloc(

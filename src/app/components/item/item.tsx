@@ -1,18 +1,18 @@
-import React, { Key } from "react";
-import { makeStyles, Theme } from "@material-ui/core/styles";
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import {
-  Typography,
-  CardContent,
   Grid,
   Card,
+  CardContent,
+  Typography,
   CardActions,
   Button,
   TextField,
 } from "@material-ui/core";
-import { useCartPloc } from "../App";
-import { CartItemState } from "../../presenters";
+import { ItemProps } from "../../../domains/item/itemInterface";
+import { useCartPloc } from "../../App";
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(theme => ({
   card: {
     height: "100%",
     display: "flex",
@@ -32,43 +32,32 @@ const useStyles = makeStyles((theme: Theme) => ({
   productPrice: {
     textAlign: "center",
   },
-  itemContainer: {
-    margin: theme.spacing(1),
-  },
-  itemImage: {
-    padding: theme.spacing(0, 1),
-    backgroundSize: "auto 100%",
-  },
-  secondContainer: {
-    display: "flex",
-    alignItems: "center",
-    padding: theme.spacing(1, 0),
-    justifyContent: "space-around",
-  },
   quantityField: {
     marginTop: theme.spacing(1),
     width: 60,
   },
 }));
 
-interface CartProps {
-  key: Key;
-  cartItem: CartItemState;
+interface itemListProps {
+  item: ItemProps;
 }
 
-const CartContentItem: React.FC<CartProps> = ({ key, cartItem }) => {
+const Item: React.FC<itemListProps> = ({item: product}) => {
   const classes = useStyles();
   const bloc = useCartPloc();
 
   return (
-    <Grid item xs={6} md={3} lg={2}>
+    <Grid item xs={6} sm={4} md={3} lg={2}>
       <Card className={classes.card}>
         <CardContent className={classes.cardContent}>
           <Typography className={classes.productTitle} gutterBottom variant="subtitle1">
-            {cartItem.title}
+            {product.title}
           </Typography>
           <Typography variant="h6" className={classes.productPrice}>
-            {cartItem.price}
+            {product.price.toLocaleString("es-ES", {
+              style: "currency",
+              currency: "THB",
+            })}
           </Typography>
           <TextField
             id="standard-number"
@@ -79,19 +68,16 @@ const CartContentItem: React.FC<CartProps> = ({ key, cartItem }) => {
               shrink: true,
             }}
             margin="none"
-            value={cartItem.quantity}
-            onChange={event => {
-              bloc.editQuantityCartItem('A001', cartItem, +event.target.value)
-            }
-            }
+            value={product.quantity}
+            disabled
           />
         </CardContent>
         <CardActions className={classes.cardActions}>
           <Button
             size="small"
             color="primary"
-            onClick={() => bloc.removeCartItem('A001', cartItem)}>
-            Remove from Cart
+            onClick={() => bloc.addItemToCart('A001', product)}>
+            Add to Cart
           </Button>
         </CardActions>
       </Card>
@@ -99,4 +85,4 @@ const CartContentItem: React.FC<CartProps> = ({ key, cartItem }) => {
   );
 };
 
-export default CartContentItem;
+export default Item;

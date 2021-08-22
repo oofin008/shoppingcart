@@ -17,16 +17,15 @@ export class ItemPloc extends Ploc<ItemState> {
     ])
   }
 
-  public async search(searchTerm: string) {
+  public async search() {
     const productResult = await this.getItemUseCase.execute();
 
     productResult.fold(
-      (error) => this.changeState(this.handleError(searchTerm, error)),
+      (error) => this.changeState(this.handleError(error)),
       (products) =>
         this.changeState({
           kind: "LoadedProductsState",
           products,
-          searchTerm,
         })
     );
   }
@@ -38,18 +37,17 @@ export class ItemPloc extends Ploc<ItemState> {
     for (const item of items) {
       const result = await this.addItemToStockUseCase.execute(item);
       result.fold(
-        (error) => this.changeState(this.handleError("", error)),
+        (error) => this.changeState(this.handleError(error)),
         (item) => products.push(item.unmarshal())
       );
     }
   }
 
-  private handleError(searchTerm: string, error: DataError): ItemState {
+  private handleError(error: DataError): ItemState {
     switch (error.kind) {
       case "UnexpectedError": {
         return {
-          searchTerm,
-          kind: "ErrorProductsState",
+          kind: "ErrorItemState",
           error: "Sorry, an error has ocurred. Please try later again",
         };
       }

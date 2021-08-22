@@ -1,8 +1,4 @@
-import { ItemProps } from "../itemInterface";
-
-export interface CommonItemState {
-    searchTerm: string;
-}
+import { ItemProps } from "../../domains";
 
 export interface LoadingItemState {
     kind: "LoadingProductsState";
@@ -13,15 +9,13 @@ export interface LoadedItemState {
     products: Array<ItemProps>;
 }
 
-export interface ErrorProductsState {
-    kind: "ErrorProductsState";
+export interface ErrorItemState {
+    kind: "ErrorItemState";
     error: string;
 }
 
-export type ItemState = (LoadingItemState | LoadedItemState | ErrorProductsState) &
-    CommonItemState;
+export type ItemState = (LoadingItemState | LoadedItemState | ErrorItemState)
 
 export const itemInitialState: ItemState = {
     kind: "LoadingProductsState",
-    searchTerm: "",
 };

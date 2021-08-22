@@ -10,7 +10,6 @@ export class Cart {
     this.items = props.items;
   }
 
-  // need validation logic here
   public static create(props: CartProps): Cart {
     return new Cart(props);
   }

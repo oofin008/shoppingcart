@@ -2,9 +2,7 @@ import { CartRepository } from "../cartRepository";
 import { Cart } from "../cartEntity";
 import { CartId, CartProps } from "../cartInterface";
 import { ItemProps } from "../../item/itemInterface";
-import { Either, EitherAsync, DataError } from "../../../shared/domain";
-import { inject, injectable } from "inversify";
-import { TYPES } from "../../../types";
+import { Either, DataError } from "../../../shared/domain";
 
 export class CreateCartUseCase {
   constructor(private cartRepository: CartRepository) {}

@@ -20,16 +20,15 @@ export class CartPloc extends Ploc<CartState> {
   ) {
     super(cartInitialState);
 
-    // this.createCart("A001", []);
     this.loadCart("A001");
   }
 
   public closeCart() {
-    this.changeState({ ...this.state, open: false });
+    this.changeState({ ...this.state});
   }
 
   public openCart() {
-    this.changeState({ ...this.state, open: true });
+    this.changeState({ ...this.state});
   }
 
   public async removeCartItem(cartId: string, item: CartItemState) {
@@ -94,7 +93,6 @@ export class CartPloc extends Ploc<CartState> {
 
     return {
       kind: "UpdatedCartState",
-      open: this.state.open,
       totalItems: cart.getTotalItems(),
       totalPrice: cart.getTotalPrice().toLocaleString("es-ES", formatOptions),
       items: cart.items.map((cartItem) => {
@@ -112,7 +110,6 @@ export class CartPloc extends Ploc<CartState> {
     switch (error.kind) {
       case "UnexpectedError": {
         return {
-          open: this.state.open,
           kind: "ErrorCartState",
           error: "Sorry, an error has ocurred. Please try later again",
         };
