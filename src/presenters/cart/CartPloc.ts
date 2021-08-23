@@ -76,7 +76,7 @@ export class CartPloc extends Ploc<CartState> {
 
   private async loadCart(cartId: string) {
     const result = await this.getCartUseCase.execute(cartId);
-    console.log('loadCart');
+    
     result.fold(
       (error) => this.changeState(this.handleError(error)),
       (cart) => this.changeState(this.mapToUpdatedState(cart))
