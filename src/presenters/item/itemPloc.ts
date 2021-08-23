@@ -1,11 +1,14 @@
 import { Ploc, DataError } from "../../shared";
 import { Item, ItemProps, GetItemsUseCase, AddItemToStockUseCase } from "../../domains";
 import { itemInitialState, ItemState } from "./itemState";
+import { inject, injectable } from "inversify";
+import { TYPES } from "../../types";
 
+@injectable()
 export class ItemPloc extends Ploc<ItemState> {
   constructor(
-    private getItemUseCase: GetItemsUseCase,
-    private addItemToStockUseCase: AddItemToStockUseCase
+    @inject(TYPES.GetItemUseCase) private getItemUseCase: GetItemsUseCase,
+    @inject(TYPES.AddItemToStockUseCase) private addItemToStockUseCase: AddItemToStockUseCase
   ) {
     super(itemInitialState);
 

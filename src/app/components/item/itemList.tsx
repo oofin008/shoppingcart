@@ -3,6 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { CircularProgress, Grid, Container, Box, Typography } from "@material-ui/core";
 import Item from "./item";
 import { dependenciesLocator } from "../../../shared/dependency/dependencyLocator";
+import { useInjection } from "../../reactBinding";
+import { ItemPloc } from "../../../presenters";
 import { usePlocState } from "../../../shared/presentation/usePlocState";
 
 const useStyles = makeStyles(theme => ({
@@ -24,12 +26,13 @@ const useStyles = makeStyles(theme => ({
 const ploc = dependenciesLocator.provideItemPloc();
 
 const ItemList: React.FC = () => {
+  // const ploc = useInjection(ItemPloc);
   const classes = useStyles();
   const state = usePlocState(ploc);
 
   React.useEffect(() => {
     const getItemList = async () => {
-      ploc.search();
+      await ploc.search();
     };
 
     getItemList();
