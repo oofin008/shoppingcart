@@ -3,7 +3,9 @@ import { makeStyles, Theme } from "@material-ui/core/styles";
 import { List, Box, Typography, CircularProgress, Container, Grid } from "@material-ui/core";
 import CartContentItem from "./cartItem";
 import { CartItemState } from "../../../presenters";
-import { useCartPloc } from "../../App";
+// import { useCartPloc } from "../../App";
+import { useInjection } from "../../reactBinding";
+import { CartPloc } from '../../../presenters';
 import { usePlocState } from "../../../shared/presentation/usePlocState";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -43,7 +45,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const CartList: React.FC = () => {
   const classes = useStyles();
-  const ploc = useCartPloc();
+  // const ploc = useCartPloc();
+  const ploc = useInjection(CartPloc);
   const state = usePlocState(ploc);
 
   const cartItems = (items: CartItemState[]) => (

@@ -1,5 +1,8 @@
+import { injectable } from "inversify";
+
 type Subscription<S> = (state: S) => void;
 
+@injectable()
 export abstract class Ploc<S> {
     private internalState: S;
     private listeners: Subscription<S>[] = [];

@@ -5,17 +5,35 @@ import { createContext } from "../shared/presentation/context";
 import ItemList from "./components/item/itemList";
 import CartList from "./components/cart/cartList";
 
-const [blocContext, usePloc] = createContext<CartPloc>();
 
-export const useCartPloc = usePloc;
+// const [blocContext, usePloc] = createContext<CartPloc>();
+
+// export const useCartPloc = usePloc;
 
 const App: React.FC = () => {
   return (
-    <blocContext.Provider value={dependenciesLocator.provideCartPloc()}>
+    // <blocContext.Provider value={dependenciesLocator.provideCartPloc()}>
+    <>
       <ItemList />
       <CartList />
-    </blocContext.Provider>
+    </>
+    // </blocContext.Provider>
   );
 };
+
+
+
+// class App extends React.Component<{}, {}> {
+//   private readonly cartPloc: CartPloc;
+
+//   render() {
+//     return (
+//       <blocContext.Provider value={this.cartPloc}>
+//         <ItemList />
+//         <CartList />
+//       </blocContext.Provider>
+//     );
+//   }
+// }
 
 export default App;

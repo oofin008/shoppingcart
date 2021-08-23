@@ -11,10 +11,15 @@ module.exports = {
     mode: 'development',
     module: {
         rules: [
+            // {
+            //     test: /\.[jt]sx?$/,
+            //     use: ['babel-loader'],
+            //     exclude: /node_modules/,
+            // },
             {
-                test: /\.[jt]sx?$/,
-                use: ['babel-loader'],
-                exclude: /node_modules/,
+              test: /\.tsx?$/,
+              exclude: '/node_modules/',
+              loader: 'ts-loader',
             },
             {
                 test: /\.css$/,

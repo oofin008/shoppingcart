@@ -9,14 +9,17 @@ import {
   Cart,
 } from "../../domains";
 import { Ploc, DataError } from "../../shared";
+import { inject, injectable } from "inversify";
+import { TYPES } from "../../types";
 
+@injectable()
 export class CartPloc extends Ploc<CartState> {
   constructor(
-    private getCartUseCase: GetCartUseCase,
-    private addItemToCartUseCase: AddItemToCartUseCase,
-    private removeItemFromCartUseCase: RemoveItemFromCartUseCase,
-    private editCartItemUseCase: EditCartItemUseCase,
-    private createCartUseCase: CreateCartUseCase
+    @inject(TYPES.GetCartUseCase) private getCartUseCase: GetCartUseCase,
+    @inject(TYPES.AddItemToCartUseCase) private addItemToCartUseCase: AddItemToCartUseCase,
+    @inject(TYPES.RemoveItemFromCartUseCase) private removeItemFromCartUseCase: RemoveItemFromCartUseCase,
+    @inject(TYPES.EditCartItemUseCase) private editCartItemUseCase: EditCartItemUseCase,
+    @inject(TYPES.CreateCartUseCase) private createCartUseCase: CreateCartUseCase
   ) {
     super(cartInitialState);
 

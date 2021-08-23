@@ -3,9 +3,12 @@ import { Cart } from "../cartEntity";
 import { CartId, CartProps } from "../cartInterface";
 import { ItemProps } from "../../item/itemInterface";
 import { Either, DataError } from "../../../shared/domain";
+import { inject, injectable } from "inversify";
+import { TYPES } from "../../../types";
 
+@injectable()
 export class CreateCartUseCase {
-  constructor(private cartRepository: CartRepository) {}
+  constructor(@inject(TYPES.CartRepository) private cartRepository: CartRepository) {}
 
   public async execute(
     id: CartId,

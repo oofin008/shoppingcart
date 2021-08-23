@@ -1,9 +1,12 @@
 import { CartRepository } from "../cartRepository";
 import { Cart } from "../cartEntity";
 import { DataError, Either, EitherAsync } from "../../../shared/domain";
+import { inject, injectable } from "inversify";
+import { TYPES } from "../../../types";
 
+@injectable()
 export class EditCartItemUseCase {
-  constructor(private cartRepository: CartRepository) {}
+  constructor(@inject(TYPES.CartRepository) private cartRepository: CartRepository) {}
 
   private validateQuantity(quantity: number): boolean {
     return quantity > 0;

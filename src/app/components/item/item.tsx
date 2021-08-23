@@ -10,7 +10,9 @@ import {
   TextField,
 } from "@material-ui/core";
 import { ItemProps } from "../../../domains/item/itemInterface";
-import { useCartPloc } from "../../App";
+// import { useCartPloc } from "../../App";
+import { useInjection } from "../../reactBinding";
+import { CartPloc } from '../../../presenters';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -44,7 +46,8 @@ interface itemListProps {
 
 const Item: React.FC<itemListProps> = ({item: product}) => {
   const classes = useStyles();
-  const bloc = useCartPloc();
+  // const bloc = useCartPloc();
+  const bloc = useInjection(CartPloc);
 
   return (
     <Grid item xs={6} sm={4} md={3} lg={2}>

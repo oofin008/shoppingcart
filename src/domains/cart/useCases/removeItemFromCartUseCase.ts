@@ -1,9 +1,12 @@
 import { CartRepository } from "../cartRepository";
 import { Cart } from "../cartEntity";
 import { Either, EitherAsync, DataError } from "../../../shared/domain";
+import { inject, injectable } from "inversify";
+import { TYPES } from "../../../types";
 
+@injectable()
 export class RemoveItemFromCartUseCase {
-  constructor(private cartRepository: CartRepository) {}
+  constructor(@inject(TYPES.CartRepository) private cartRepository: CartRepository) {}
 
   public async execute(
     id: string,

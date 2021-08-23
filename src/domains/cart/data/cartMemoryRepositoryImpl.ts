@@ -3,9 +3,12 @@ import { CartProps } from "../cartInterface";
 import { CartRepository } from "../cartRepository";
 import { MemoryData } from "../../../shared/data/memoryData";
 import { Either, DataError } from "../../../shared/domain";
+import { inject, injectable } from "inversify";
+import { TYPES } from "../../../types";
 
+@injectable()
 export class CartMemoryRepositoryImpl implements CartRepository {
-  constructor(private _database: MemoryData) {}
+  constructor(@inject(TYPES.Database) private _database: MemoryData) {}
 
   async create(cart: Cart): Promise<Either<DataError, Cart>> {
     return new Promise((resolve, _reject) => {

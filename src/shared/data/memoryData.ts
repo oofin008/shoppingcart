@@ -33,6 +33,7 @@ class Collection {
   }
 }
 
+@injectable()
 export class MemoryData {
   public items = new Collection();
   public cart = new Collection();

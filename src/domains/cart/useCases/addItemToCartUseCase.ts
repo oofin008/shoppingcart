@@ -3,10 +3,13 @@ import { Cart } from "../cartEntity";
 import { CartId } from "../cartInterface";
 import { ItemProps } from "../../item/itemInterface";
 import { Either, EitherAsync, DataError } from "../../../shared/domain";
+import { inject, injectable } from "inversify";
+import { TYPES } from "../../../types";
 
+@injectable()
 export class AddItemToCartUseCase {
   constructor(
-    private cartRepository: CartRepository
+    @inject(TYPES.CartRepository) private cartRepository: CartRepository
   ) {}
 
   public async execute(
