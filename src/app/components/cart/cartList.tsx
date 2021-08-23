@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { List, Box, Typography, CircularProgress, Container, Grid } from "@material-ui/core";
-import CartContentItem from "./cartItem";
+import CartItem from "./cartItem";
 import { CartItemState } from "../../../presenters";
 // import { useCartPloc } from "../../App";
 import { useInjection } from "../../reactBinding";
@@ -51,7 +51,7 @@ const CartList: React.FC = () => {
 
   const cartItems = (items: CartItemState[]) => (
       items.map((item, index) => (
-        <CartContentItem key={index} cartItem={item} />
+        <CartItem key={index} cartItem={item} />
       ))
   );
 

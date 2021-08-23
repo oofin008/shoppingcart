@@ -11,7 +11,7 @@ export class Item{
     this.id = props.id
     this.title = props.title
     this.price = props.price
-    this.quantity = props.quantity
+    this.quantity = this.validateQty(props.quantity)? props.quantity : 1
   }
 
   public static create(props: ItemProps): Item {
@@ -28,8 +28,8 @@ export class Item{
     }
   }
 
-  public updateQuantity(quantity: number): void {
-    this.quantity = quantity
+  private validateQty(quantity: number): boolean {
+    return quantity >= 1
   }
 
   public getItem(quantity: number): boolean {

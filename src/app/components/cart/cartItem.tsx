@@ -44,7 +44,7 @@ interface CartProps {
   cartItem: CartItemState;
 }
 
-const CartContentItem: React.FC<CartProps> = ({ cartItem }) => {
+const CartItem: React.FC<CartProps> = ({ cartItem }) => {
   const classes = useStyles();
   // const bloc = useCartPloc();
   const bloc = useInjection(CartPloc);
@@ -88,4 +88,4 @@ const CartContentItem: React.FC<CartProps> = ({ cartItem }) => {
   );
 };
 
-export default CartContentItem;
+export default CartItem;

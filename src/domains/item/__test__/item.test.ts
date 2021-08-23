@@ -1,9 +1,9 @@
 import { expect } from "chai";
 import faker from "faker";
 import _ from "lodash";
-import { Item } from "../../src/domains/item/itemEntity";
-import { CartProps } from "../../src/domains/cart/cartInterface";
-import { ItemProps } from "../../src/domains/item/itemInterface";
+import { Item } from "../itemEntity";
+import { CartProps } from "../../cart/cartInterface";
+import { ItemProps } from "../itemInterface";
 
 describe("Item Entity", () => {
   describe('constructor', () => {

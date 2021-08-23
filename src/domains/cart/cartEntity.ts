@@ -15,7 +15,6 @@ export class Cart {
   }
 
   public addItem(item: ItemProps): void {
-    console.log('itemEntity additem => ', item);
     const existedIndex = this.items.findIndex((i) => i.id === item.id);
 
     if (existedIndex > -1) {
