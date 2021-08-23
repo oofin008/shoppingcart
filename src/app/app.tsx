@@ -21,19 +21,4 @@ const App: React.FC = () => {
   );
 };
 
-
-
-// class App extends React.Component<{}, {}> {
-//   private readonly cartPloc: CartPloc;
-
-//   render() {
-//     return (
-//       <blocContext.Provider value={this.cartPloc}>
-//         <ItemList />
-//         <CartList />
-//       </blocContext.Provider>
-//     );
-//   }
-// }
-
 export default App;
